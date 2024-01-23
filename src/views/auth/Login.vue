@@ -25,10 +25,10 @@ const login = async () => {
     if (res.data.status === 'success') {
       localStorage.setItem('token', res.data.token);
       if (res.data.user.role === 'super_admin') {
-        await router.push('/dashboard/super_admin/');
+        await router.push('/dashboard/admin/');
         // alert('admin')
       } else {
-        await router.push('dashboard/admin/');
+        await router.push('/dashboard/user/');
         // alert('Not found')
       }
 
