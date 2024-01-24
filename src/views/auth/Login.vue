@@ -8,7 +8,7 @@ const email = ref('')
 const password = ref('')
 const regerror = ref('')
 
-import {auth} from "@/compossables/auth";
+import {auth} from "@/Composables/auth";
 
 const {base_url, authHeader} = auth()
 
@@ -28,7 +28,7 @@ const login = async () => {
         await router.push('/dashboard/admin/');
         // alert('admin')
       } else {
-        await router.push('/dashboard/user/');
+        await router.push('/dashboard');
         // alert('Not found')
       }
 

@@ -1,8 +1,15 @@
 
 <script setup>
 import {ref} from "vue";
-
 const showProfile = ref(false)
+import {useRouter} from "vue-router";
+
+const router = useRouter()
+
+function LogOut(){
+  localStorage.removeItem('token')
+   router.push('/auth/login/');
+}
 
 </script>
 
@@ -22,7 +29,7 @@ const showProfile = ref(false)
               <router-link class="nav-link text-primary" to="/dashboard">Dashboard</router-link>
             </li>
             <li class="nav-item">
-              <router-link class="nav-link text-primary" to="/reviews">Find work</router-link>
+              <router-link class="nav-link text-primary" to="/dashboard">Find work</router-link>
             </li>
             <li class="nav-item">
               <img width="50" @click="showProfile = showProfile === false ? true : false" style="border-radius: 50%;" height="50" src="/public/abu.jpg" alt="">
@@ -38,7 +45,7 @@ const showProfile = ref(false)
              </div>
              <i style="font-size: 22px" class="bi bi-gear"> Settings</i>
              <br>
-             <i style="font-size: 22px"  class="bi bi-box-arrow-left">  Logout</i>
+             <i style="font-size: 22px" @click="LogOut()" class="bi bi-box-arrow-left">  Logout</i>
            </div>
 
             </div>

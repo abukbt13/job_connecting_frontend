@@ -1,10 +1,10 @@
 <template>
-  <p>Employer Dashboard</p>
+
 </template>
 
 <script>
 export default {
-  name: "employer"
+  name: "JobSeekers"
 }
 </script>
 
