@@ -2,10 +2,8 @@
 
 </template>
 
-<script>
-export default {
-  name: "Employees"
-}
+<script setup>
+
 </script>
 
 <style scoped>

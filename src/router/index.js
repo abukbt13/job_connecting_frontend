@@ -8,6 +8,7 @@ import UserIndex from '../views/Dashboard/Job_Seeker/Index.vue'
 import RecentlyPosted from "@/views/Dashboard/Job_Seeker/RecentlyPosted.vue";
 import SavedJobs from "@/views/Dashboard/Job_Seeker/SavedJobs.vue";
 import Bestmatches from "@/views/Dashboard/Job_Seeker/Bestmatches.vue";
+import Profiles from "@/views/Dashboard/User/Profiles.vue"
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -32,6 +33,10 @@ const router = createRouter({
     {
       path: '/auth/reset_password',
       component: FinishReset
+    },
+    {
+      path: '/user/profile',
+      component: Profiles
     },
       //dashboard
     {

@@ -5,7 +5,7 @@
 <template>
 
   <div class="">
-    <div class="row bg-dark my-2">
+    <div style="background-color: rgb(202, 222, 24);" class="row  my-2">
       <div class="col px-4">
         <h2 class="text-primary">Follow Us on</h2>
        <i style="font-size:30px; background-color: yellow;color: blue" class="bi  border rounded-5 mx-2 p-1 rounded-5 bi-facebook"></i>

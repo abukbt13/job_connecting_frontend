@@ -28,7 +28,7 @@ const login = async () => {
         await router.push('/dashboard/admin/');
         // alert('admin')
       } else {
-        await router.push('/dashboard');
+        window.location ='/dashboard'
         // alert('Not found')
       }
 

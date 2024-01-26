@@ -1,15 +1,22 @@
 
 <script setup>
-import {ref} from "vue";
+import {onMounted, ref} from "vue";
 const showProfile = ref(false)
 import {useRouter} from "vue-router";
-
+import {user} from "@/Composables/user.js"
+const {userDetails,details} =user()
 const router = useRouter()
-
+const username= ref(null)
+username.value=details.firstName
 function LogOut(){
   localStorage.removeItem('token')
    router.push('/auth/login/');
 }
+
+onMounted(()=>{
+  username.value=details
+  userDetails()
+})
 
 </script>
 
@@ -31,24 +38,31 @@ function LogOut(){
             <li class="nav-item">
               <router-link class="nav-link text-primary" to="/dashboard">Find work</router-link>
             </li>
-            <li class="nav-item">
+            <li class="nav-item" v-if="details">
               <img width="50" @click="showProfile = showProfile === false ? true : false" style="border-radius: 50%;" height="50" src="/public/abu.jpg" alt="">
             </li>
-            <div  :class="showProfile ? '':'d-none'"    class="showProfile d-flex justify-content-center align-items-center m-2 border p-4">
-           <div class="profile">
-             <div class="d-flex justify-content-center"><img style="border-radius: 50%;" width="50"  height="50" src="/public/abu.jpg" alt=""></div>
-             <p class="text-center text-uppercase">Abraham Kibet</p>
-              <p class="text-center text-uppercase">web developer</p>
-             <div class="d-flex btn border">
-               <button class="button btn btn-sm btn-primary">Active</button>
-               <button class="button btn btn-sm btn-light">In active</button>
-             </div>
-             <i style="font-size: 22px" class="bi bi-gear"> Settings</i>
-             <br>
-             <i style="font-size: 22px" @click="LogOut()" class="bi bi-box-arrow-left">  Logout</i>
-           </div>
+            <li class="nav-item d-flex justify-content-center align-items-center" v-else>
+              <router-link to="/auth/login" class="text-decoration-none"> <i style="font-size: 22px" @click="LogOut()" class="bi bi-box-arrow-right">LOGIN</i></router-link>
+            </li>
 
+
+            <div  :class="showProfile ? '':'d-none'"    class="showProfile d-flex justify-content-center align-items-center m-2 border p-4">
+               <div class="profile" v-if="username">
+                 <div class="d-flex justify-content-center">
+                   <img style="border-radius: 50%;" width="50"  height="50" src="/public/abu.jpg" alt="">
+                 </div>
+                 <p class="text-center text-uppercase"> {{details.firstName}} {{details.lastName}}</p>
+                 <div class="d-flex btn border">
+                   <button style="background-color: yellow;" class="button btn btn-sm">Active</button>
+                   <button class="button btn btn-sm btn-light">In active</button>
+                 </div>
+                 <router-link to="/user/profile" style="font-size: 23px;" class="text-decoration-none"><i style="font-size: 22px" class="bi bi-gear"> </i>Settings</router-link>
+
+                 <br>
+                 <i style="font-size: 22px" @click="LogOut()" class="bi bi-box-arrow-left">  Logout</i>
+               </div>
             </div>
+
           </ul>
         </div>
       </div>
