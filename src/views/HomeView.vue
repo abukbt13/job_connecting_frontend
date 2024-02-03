@@ -19,24 +19,28 @@ import Footer from "@/components/Footer.vue";
       </div>
       </div>
   </div>
- <div class="container">
-   <mid-content class="row">
-     <div class="col">
-       <h2 class="text-uppercase">Why Connect_Me?</h2>
-       <h5 >Easy connecting with Clients</h5>
-       <p style="color: blue; font-size: 23px;" >You can find a person to hire by seeing their profile
+
+     <div class="mid-content">
+       <h2 class="text-uppercase text-center">Why Connect_Me?</h2>
+       <h5 class="text-center">Easy connecting with Clients</h5>
+       <p class="text-center" style="color: rgba(205,20,205); font-size: 24px;line-height: 3rem;" >
+         You can find a person to hire by seeing their profile
          and requesting more information about the job seeker and also know some of his people.
-       </p>
-       <p style="color: blue;font-size: 23px;" >
+
          By Posting a job job clients can reach you easily for connection
        </p >
-       <h2>Know Clients Info</h2>
-       <p style="color: blue; font-size: 23px;">
+       <h2 class="text-center">Know Clients Info</h2>
+       <p class="text-center" style="color: rgba(205,20,205); font-size: 24px;line-height: 3rem;">
          By choosing a certain person you can be able to know more about his or her Geographical location and also viewing the profile information of the client
        </p>
      </div>
-     <div class="col"><p>fdghjklo</p></div>
-   </mid-content>
- </div>
+
   <Footer />
+
 </template>
+<style>
+.mid-content{
+  background-color: lightblue;
+  padding: 2rem 4rem 2rem 4rem;
+}
+</style>
