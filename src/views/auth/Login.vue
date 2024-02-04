@@ -25,7 +25,7 @@ const login = async () => {
     if (res.data.status === 'success') {
       localStorage.setItem('token', res.data.token);
       if (res.data.user.role === 'super_admin') {
-        await router.push('/dashboard/admin/');
+        await router.push('/dashboard');
         // alert('admin')
       } else {
         window.location ='/dashboard'
@@ -55,6 +55,7 @@ const login = async () => {
       <div className="col-12 col-md-8 col-lg-6 col-xl-5">
         <div className="error text-center bg-danger text-white text-uppercase">{{ reggerror }}</div>
         <h2 className="text-center text-uppercase">Login here</h2>
+        <p>Dont have an account?<router-link to="/auth/register">Create Account</router-link></p>
         <form @submit.prevent="login">
           <div className="mb-3">
             <label htmlFor="exampleFormControlInput1" className="form-label">Email address</label>

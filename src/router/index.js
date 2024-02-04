@@ -9,6 +9,7 @@ import RecentlyPosted from "@/views/Dashboard/Job_Seeker/RecentlyPosted.vue";
 import SavedJobs from "@/views/Dashboard/Job_Seeker/SavedJobs.vue";
 import Bestmatches from "@/views/Dashboard/Job_Seeker/Bestmatches.vue";
 import Profiles from "@/views/Dashboard/User/Profiles.vue"
+import Index from "@/views/Dashboard/Index.vue"
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -38,26 +39,31 @@ const router = createRouter({
       path: '/user/profile',
       component: Profiles
     },
-      //dashboard
+
     {
-      path: '/user/dashboard',
-      component: UserIndex,
+      path: '/dashboard',
+      component: Index,
       children:
-        [
-          {
-            path: '/dashboard',
-            component: RecentlyPosted
-          },
-          {
-            path: '/dashboard/saved_jobs',
-            component: SavedJobs
-          },
-          {
-            path: '/dashboard/best_matches',
-            component: Bestmatches
-          },
-        ]
-  },
+          [
+            {
+              path: '/dashboard',
+              component: RecentlyPosted
+            },
+            {
+              path: '/dashboard/saved_jobs',
+              component: SavedJobs
+            },
+            {
+              path: '/dashboard/best_matches',
+              component: Bestmatches
+            },
+          ]
+    },
+  //   {
+  //     path: '/dashboard',
+  //     component: UserIndex,
+
+  // },
 
   ]
 })

@@ -11,6 +11,7 @@ const c_password = ref('')
 const error = ref('')
 const firstName = ref('')
 const lastName = ref('')
+const role = ref('')
  const createAccount =async () => {
   if(email.value=='' && password.value==''  && password.value =='' && firstName.value=='' && lastName.value=='' ){
     error.value = 'All field are required !'
@@ -18,6 +19,7 @@ const lastName = ref('')
    else if (password.value === c_password.value) {
      const formData = new FormData();
      formData.append('email', email.value)
+     formData.append('role', role.value)
      formData.append('firstName', firstName.value)
      formData.append('lastName', lastName.value)
      formData.append('phone', phone.value)
@@ -72,21 +74,14 @@ const lastName = ref('')
                 <label for="exampleFormControlTextarea1" class="form-label">Email</label>
                 <input type="email" class="form-control" v-model="email">
               </div>
-<!--            <div class="mb-3">-->
-<!--                <label for="exampleFormControlTextarea1" class="form-label">Current Location</label>-->
-<!--                <input type="text" class="form-control" v-model="location">-->
-<!--              </div>-->
-<!--            <div class="mb-3">-->
-<!--                <label for="exampleFormControlTextarea1" class="form-label">Register as?</label>-->
-<!--                <select v-model="user">-->
-<!--                  <option value="employer">Employer</option>-->
-<!--                  <option value="job_seeker">Job Seeker</option>-->
-<!--                </select>-->
-<!--              </div>-->
-<!--            <div class="">-->
-<!--              <button type="submit" class="w-100 btn btn-primary btn-block text-uppercase">Continue<i style="font-size" class="bi bi-telegram float-end"></i>-->
-<!--              </button>-->
-<!--            </div>-->
+              <div class="mb-3">
+                <label for="exampleFormControlTextarea1" class="form-label">Register As</label>
+                <select class="form-control" v-model="role">
+                  <option value="job_seeker">Job_seeker</option>
+                  <option value="employer">Employer</option>
+                </select>
+              </div>
+
             <div class="mb-3">
               <label for="exampleFormControlTextarea1" class="form-label">Password</label>
               <input type="password" class="form-control" v-model="password">

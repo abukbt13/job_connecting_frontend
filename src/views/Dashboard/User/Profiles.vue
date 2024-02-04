@@ -17,9 +17,13 @@ const  phonenumber=ref('')
 const  error=ref('')
 const  relationship=ref('')
 const  county=ref('')
+const  picture=ref('')
+const  picture_upload=ref('')
 const referees=ref(null)
 const details=ref(null)
-
+function pictureUpload(e){
+  picture_upload.value=e.target.files[0];
+}
 const   userDetails = async () => {
   const res= await axios.get(base_url.value+'user', authHeader)
   if(res.status === 200){
@@ -29,6 +33,7 @@ const   userDetails = async () => {
           password.value=res.data.password
           firstName.value=res.data.firstName
           lastName.value=res.data.lastName
+          picture.value=res.data.picture
   }
 }
 
@@ -38,6 +43,7 @@ const editProfile = async () => {
     formData.append('firstName', firstName.value);
     formData.append('lastName', lastName.value);
     formData.append('phone', phone.value);
+    formData.append('picture', picture_upload.value);
 
     const res = await axios.post(base_url.value + 'auth/update', formData, authHeader);
 
@@ -104,7 +110,8 @@ onMounted( ()=>{
             <div class="card-body">
               <div class="d-flex">
                 <div class="">
-                  <img src="/public/abu.jpg"   height="200" width="200" class="" alt="...">
+
+                  <img  :src="'http://127.0.0.1:8000/storage/Profiles/'+picture"    height="200" width="200" class="" alt="...">
                 </div>
                 <div class="ms-2">
 
@@ -152,6 +159,10 @@ onMounted( ()=>{
                     <div class="mb-3">
                       <label for="exampleFormControlTextarea1" class="form-label">Phone</label>
                       <input type="number" class="form-control" v-model="phone">
+                    </div>
+                    <div class="mb-3">
+                      <label for="exampleFormControlTextarea1" class="form-label">Upload Profile</label>
+                      <input type="file" class="form-control" @change="pictureUpload">
                     </div>
 
 

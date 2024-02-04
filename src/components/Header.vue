@@ -6,8 +6,10 @@ import {useRouter} from "vue-router";
 import {user} from "@/Composables/user.js"
 const {userDetails,details} =user()
 const router = useRouter()
+const picture= ref('')
 const username= ref(null)
 username.value=details.firstName
+picture.value=details.picture
 function LogOut(){
   localStorage.removeItem('token')
    router.push('/auth/login/');
@@ -32,24 +34,33 @@ onMounted(()=>{
             <li class="nav-item text-primary">
               <router-link class="nav-link active  text-primary" to="/">Home</router-link>
             </li>
-            <li class="nav-item">
-              <router-link class="nav-link text-primary" to="/dashboard">Dashboard</router-link>
-            </li>
-            <li class="nav-item">
-              <router-link class="nav-link text-primary" to="/dashboard">Find work</router-link>
-            </li>
-            <li class="nav-item" v-if="details">
-              <img width="50" @click="showProfile = showProfile === false ? true : false" style="border-radius: 50%;" height="50" src="/public/abu.jpg" alt="">
-            </li>
-            <li class="nav-item d-flex justify-content-center align-items-center" v-else>
-              <router-link to="/auth/login" class="text-decoration-none"> <i style="font-size: 22px" @click="LogOut()" class="bi bi-box-arrow-right">LOGIN</i></router-link>
-            </li>
+            <div class="d-flex" v-if="username">
+                  <li class="nav-item text-uppercase">
+                    <router-link class="nav-link text-primary" to="/dashboard">Dashboard</router-link>
+                  </li>
+                 <li class="nav-item text-uppercase">
+                    <router-link class="nav-link text-primary" to="/dashboard">Find work</router-link>
+                  </li>
+                  <li class="nav-item text-uppercase">
+                    <img width="50" @click="showProfile = showProfile === false ? true : false" style="border-radius: 50%;" height="50"  :src="'http://127.0.0.1:8000/storage/Profiles/'+details.picture"  alt="">
+                  </li>
+
+            </div>
+            <div class="d-flex" v-else>
+              <li class="nav-item d-flex justify-content-center align-items-center text-uppercase">
+                <router-link to="/auth/login" class="text-decoration-none">LOGIN <i style="font-size: 22px" @click="LogOut()" class="bi bi-box-arrow-right"></i></router-link>
+              </li>
+              <li class="nav-item d-flex justify-content-center align-items-center text-uppercase">
+                <router-link to="/auth/register" class="text-decoration-none">Get Started <i style="font-size: 22px" class="bi bi-pen"></i></router-link>
+              </li>
+            </div>
+
 
 
             <div  :class="showProfile ? '':'d-none'"    class="showProfile d-flex justify-content-center align-items-center m-2 border p-4">
                <div class="profile" v-if="username">
                  <div class="d-flex justify-content-center">
-                   <img style="border-radius: 50%;" width="50"  height="50" src="/public/abu.jpg" alt="">
+                   <img style="border-radius: 50%;" width="50"  height="50"  :src="'http://127.0.0.1:8000/storage/Profiles/'+details.picture"   alt="">
                  </div>
                  <p class="text-center text-uppercase"> {{details.firstName}} {{details.lastName}}</p>
                  <div class="d-flex btn border">
@@ -85,5 +96,7 @@ onMounted(()=>{
 }
 li:hover{
   background: rgb(146, 159, 222);
+  color: white;
+  cursor: progress;
 }
 </style>
