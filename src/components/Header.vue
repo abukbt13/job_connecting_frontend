@@ -32,7 +32,7 @@ onMounted(()=>{
         <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
           <ul class="navbar-nav">
             <li class="nav-item text-primary">
-              <router-link class="nav-link active  text-primary" to="/">Home</router-link>
+              <router-link class="nav-link active  text-primary" to="/">Home{{username}}</router-link>
             </li>
             <div class="d-flex" v-if="username">
                   <li class="nav-item text-uppercase">

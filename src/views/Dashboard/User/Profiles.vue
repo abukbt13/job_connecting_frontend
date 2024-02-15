@@ -17,6 +17,8 @@ const  phonenumber=ref('')
 const  error=ref('')
 const  relationship=ref('')
 const  county=ref('')
+const  gender=ref('')
+const  sub_county=ref('')
 const  picture=ref('')
 const  picture_upload=ref('')
 const referees=ref(null)
@@ -34,6 +36,9 @@ const   userDetails = async () => {
           firstName.value=res.data.firstName
           lastName.value=res.data.lastName
           picture.value=res.data.picture
+          county.value=res.data.county
+          sub_county.value=res.data.sub_county
+          gender.value=res.data.gender
   }
 }
 
@@ -43,6 +48,9 @@ const editProfile = async () => {
     formData.append('firstName', firstName.value);
     formData.append('lastName', lastName.value);
     formData.append('phone', phone.value);
+    formData.append('county', county.value);
+    formData.append('sub_county', sub_county.value);
+    formData.append('gender', gender.value);
     formData.append('picture', picture_upload.value);
 
     const res = await axios.post(base_url.value + 'auth/update', formData, authHeader);
@@ -142,7 +150,7 @@ onMounted( ()=>{
             <div class="modal-dialog">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                  <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Profile</h1>
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <form @submit.prevent="editProfile">
@@ -159,6 +167,18 @@ onMounted( ()=>{
                     <div class="mb-3">
                       <label for="exampleFormControlTextarea1" class="form-label">Phone</label>
                       <input type="number" class="form-control" v-model="phone">
+                    </div>
+                    <div class="mb-3">
+                      <label for="exampleFormControlTextarea1" class="form-label">County</label>
+                      <input type="text" class="form-control" v-model="county">
+                    </div>
+                    <div class="mb-3">
+                      <label for="exampleFormControlTextarea1" class="form-label">Sub county</label>
+                      <input type="text" class="form-control" v-model="sub_county">
+                    </div>
+                    <div class="mb-3">
+                      <label for="exampleFormControlTextarea1" class="form-label">Gender</label>
+                      <input type="gender" class="form-control" v-model="gender">
                     </div>
                     <div class="mb-3">
                       <label for="exampleFormControlTextarea1" class="form-label">Upload Profile</label>
