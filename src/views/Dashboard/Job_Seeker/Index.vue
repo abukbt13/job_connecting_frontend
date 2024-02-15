@@ -1,8 +1,8 @@
 
 <script setup>
-import Header from "@/components/header.vue"
+
 import {auth} from "@/Composables/auth.js";
-const {authHeader,authUser,base_url,storage} =auth
+const {authHeader,authUser,base_url,storage} =auth()
 
 </script>
 
