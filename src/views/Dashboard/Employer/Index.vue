@@ -96,43 +96,42 @@ onMounted( ()=>{
         </div>
       </div>
       <hr>
+
       <div class="bg-light job_seekers p-4">
           <div v-for="user in jobseekers" :key="user" class="card" style="width: 18rem;">
-            <img src="/abu.jpg" class="card-img-top" alt="...">
+            <img style="border-radius: 30%;padding: 1rem;" :src="storage+user.picture" class="card-img-top" alt="...">
             <div class="card-body">
-              <div class="d-flex border-bottom">
-                <div class="">
-
-                  <h5>Name</h5>
-                  <p style="font-size: 20px;" class="card-text">
-                    {{user.lastName}}
-                    {{user.firstName}}
-                  </p>
-                </div>
-                <div class="ms-4">
-                  <h5>County</h5>
-                  <h6 class="card-text">Meru </h6>
-                </div>
-              </div>
-
               <div class="d-flex">
                 <div class="">
-                  <h5>Sub County</h5>
-                  <p style="font-size: 20px;" class="card-text">Kitale</p>
+                  <h5>Name</h5>
+                  <p>{{user.firstName}} {{user.lastName}}</p>
                 </div>
                 <div class="ms-4">
                   <h5>Gender</h5>
                   <p style="font-size: 20px;" class="card-text">Male</p>
                 </div>
               </div>
+              <div class="d-flex">
+                <div class="">
+                  <h5>County</h5>
+                  <p>{{user.county}}</p>
+                </div>
+                <div class="ms-4">
+                  <h5>Sub County</h5>
+                  <p style="font-size: 20px;" class="card-text">{{user.sub_county}}</p>
+                </div>
+              </div>
+              <div class="d-flex justify-content-between">
+                <button class="btn mx-4 my-2 btn-info">More</button>
+                <button class="btn mx-4 my-2 btn-success">Connect</button>
+              </div>
             </div>
-            <button class="btn mx-4 my-2 btn-info">Connect Now </button>
+
           </div>
+
       </div>
     </div>
   </div>
-
-  //Modals
   <div class="modal fade" id="addpost" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">

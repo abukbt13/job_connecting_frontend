@@ -8,7 +8,7 @@ export function auth(){
     // const storage = ref('https://ben.kwetunyumbani.online/backend/public/profiles/')
 
     const base_url = ref('http://127.0.0.1:8000/api/')
-    const storage = ref('http://127.0.0.1:8000/')
+    const storage = ref('http://127.0.0.1:8000/Profiles/')
 
     const   authUser = async () => {
         try {

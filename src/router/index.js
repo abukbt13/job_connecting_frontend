@@ -4,14 +4,12 @@ import Login from '../views/auth/Login.vue'
 import Register from '../views/auth/Register.vue'
 import ForgotPassword from '../views/auth/ForgotPassword.vue'
 import FinishReset from '../views/auth/FinishReset.vue'
-import UserIndex from '../views/Dashboard/Job_Seeker/Index.vue'
+import Job_seeker from '../views/Dashboard/Job_Seeker/Index.vue'
 import RecentlyPosted from "@/views/Dashboard/Job_Seeker/RecentlyPosted.vue";
-import SavedJobs from "@/views/Dashboard/Job_Seeker/SavedJobs.vue";
 import Bestmatches from "@/views/Dashboard/Job_Seeker/Bestmatches.vue";
 import Profiles from "@/views/Dashboard/User/Profiles.vue"
-import Index from "@/views/Dashboard/Index.vue"
-const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+import SavedConnects from "@/views/Dashboard/Job_Seeker/SavedConnects.vue";
+const router = createRouter({  history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
@@ -41,31 +39,24 @@ const router = createRouter({
     },
 
     {
-      path: '/dashboard',
-      component: Index,
-      children:
-          [
-            {
-              path: '/dashboard',
-              component: RecentlyPosted
-            },
-            {
-              path: '/dashboard/saved_jobs',
-              component: SavedJobs
-            },
-            {
-              path: '/dashboard/best_matches',
-              component: Bestmatches
-            },
-          ]
+      path: '/Jobs/dashboard',
+      component: Job_seeker,
+      children: [
+        {
+          path: '/Jobs/dashboard',
+          component: RecentlyPosted,
+        },
+        {
+          path: 'best_match',
+          component: Bestmatches,
+        },
+        {
+          path: 'saved_connect',
+          component: SavedConnects,
+        }
+      ]
     },
-  //   {
-  //     path: '/dashboard',
-  //     component: UserIndex,
-
-  // },
-
-  ]
+]
 })
 
 export default router

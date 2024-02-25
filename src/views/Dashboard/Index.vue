@@ -27,19 +27,9 @@ onMounted(()=>{
 
 <div class="">
   <Header />
+  <p>Dashboard</p>
 </div>
-  <div class="" v-if="role == 'job_seeker'">
-      <Jobseeker_Index />
-  </div>
-  <div class="" v-else-if="role == 'employer'">
-    <Employee />
-  </div>
-  <div class="" v-else-if="role == 'employer'">
 
-  </div>
-  <div class="" v-else>
-    <p>Error please check your profile and update  your profile role</p>
-  </div>
 </template>
 
 

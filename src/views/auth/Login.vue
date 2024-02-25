@@ -24,12 +24,14 @@ const login = async () => {
   if (res.status === 200) {
     if (res.data.status === 'success') {
       localStorage.setItem('token', res.data.token);
-      if (res.data.user.role === 'super_admin') {
-        await router.push('/dashboard');
-        // alert('admin')
-      } else {
-        window.location ='/dashboard'
-        // alert('Not found')
+      if (res.data.user.role === 'job_seeker') {
+        await router.push('/Jobs/dashboard');
+      }
+      else if (res.data.user.role === 'employer'){
+        await router.push('/Employers/dashboard');
+      }
+      else {
+        await router.push('/Admin/dashboard');
       }
 
       // await router.push('/');

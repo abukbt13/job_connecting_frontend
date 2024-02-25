@@ -119,7 +119,7 @@ onMounted( ()=>{
               <div class="d-flex">
                 <div class="">
 
-                  <img  :src="'http://127.0.0.1:8000/storage/Profiles/'+picture"    height="200" width="200" class="" alt="...">
+                  <img  :src="'http://127.0.0.1:8000/Profiles/'+picture"    height="200" width="200" class="" alt="...">
                 </div>
                 <div class="ms-2">
 
