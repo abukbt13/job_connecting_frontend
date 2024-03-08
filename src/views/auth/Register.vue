@@ -31,7 +31,7 @@ const role = ref('')
 
               localStorage.setItem('progress', 0)
               localStorage.setItem('progress', 0)
-             await router.push('/dashboard')
+             await router.push('/login')
             }
             else{
               error.value = res.data.message

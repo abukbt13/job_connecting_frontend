@@ -40,14 +40,14 @@ onMounted(()=>{
 <template>
   <ul class="nav nav-tabs">
     <li class="nav-item">
-      <router-link to="/jobs/dashboard/" class="nav-link active" aria-current="page">Recently Posted</router-link>
+      <router-link to="/j/dashboard/" class="nav-link active" aria-current="page">Recently Posted</router-link>
     </li>
     <li class="nav-item">
-      <router-link to="/jobs/dashboard/best_match" class="nav-link " aria-current="page">Best Matches</router-link>
+      <router-link to="/j/dashboard/best_match" class="nav-link " aria-current="page">Best Matches</router-link>
     </li>
 
     <li class="nav-item">
-      <router-link to="/jobs/dashboard/saved_connect" class="nav-link " aria-current="page">Saved Jobs</router-link>
+      <router-link to="/j/dashboard/saved_connect" class="nav-link " aria-current="page">Saved Jobs</router-link>
     </li>
   </ul>
 
@@ -61,14 +61,14 @@ onMounted(()=>{
           <p>{{post.description}}</p>
         </div>
         <div class="mt-2">
-          <h2 class="text-dark">Payment Details</h2>
+          <h2 class="text-dark">Payment Mode</h2>
           {{post.payment}}
         </div>
     </div>
     <div class="d-flex px-4 pb-3 justify-content-between">
         <div class="">
           <h3 class="text-dark">Payment Details</h3>
-          {{post.payment}}
+          {{post.payment_amount}}
         </div>
       <div class="">
         <div class="me-4 mb-4">

@@ -1,14 +1,14 @@
 <template>
   <ul class="nav nav-tabs">
     <li class="nav-item">
-      <router-link to="/jobs/dashboard/" class="nav-link" aria-current="page">Recently Posted</router-link>
+      <router-link to="/j/dashboard/" class="nav-link" aria-current="page">Recently Posted</router-link>
     </li>
     <li class="nav-item">
-      <router-link to="/jobs/dashboard/best_match" class="nav-link active" aria-current="page">Best Matches</router-link>
+      <router-link to="/j/dashboard/best_match" class="nav-link active" aria-current="page">Best Matches</router-link>
     </li>
 
     <li class="nav-item">
-      <router-link to="/jobs/dashboard/saved_connect" class="nav-link" aria-current="page">Saved Jobs</router-link>
+      <router-link to="/j/dashboard/saved_connect" class="nav-link" aria-current="page">Saved Jobs</router-link>
     </li>
   </ul>
 <p>Best matched jobs</p>

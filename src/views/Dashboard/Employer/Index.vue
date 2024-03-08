@@ -3,6 +3,7 @@ import axios from "axios";
 import {onMounted, ref} from "vue";
 
 import {user} from "@/Composables/user.js";
+import Header from "@/components/Header.vue";
 const {base_url,authHeader,storage} =user()
 
 const jobseekers = ref([])
@@ -11,6 +12,7 @@ const status = ref('')
 const priority = ref('')
 const payment = ref('')
 const skills = ref('')
+const job_seeker_id = ref('')
 const payment_amount = ref('')
 
 const   fetchJobseekers = async () => {
@@ -36,10 +38,24 @@ const createPost = async () => {
       status.value = 'Post created successfully!'
     }
     else {
-      status.value= res.data;
+      status.value= res.data.message;
     }
   } else {
     status.value = 'Error in network try again later!'
+  }
+}
+function assignEmployer_id($post){
+  job_seeker_id.value=$post
+}
+
+const connectEmployer = async () => {
+
+  const formData = new FormData();
+  formData.append('job_seeker_id', job_seeker_id.value)
+  const res = await axios.post(base_url.value + 'job_seeker/connect_employer', formData,authHeader)
+  status.value= 'Connection established successfully'
+  if (res.data.status == 'success'){
+    status.value= 'Connection established successfully'
   }
 }
 onMounted( ()=>{
@@ -48,19 +64,30 @@ onMounted( ()=>{
 </script>
 
 <template>
+  <Header />
+  <div style="background-color: #05fa26;" class="p-2 text-uppercase text-primary text-center" v-if="status">{{status}}</div>
   <div class="d-flex">
-    <div class="" v-if="status">{{status}}</div>
-    <div class="sidebar">
-      <h2 class="text-uppercase text-primary ms-4 mt-3">Dashboard</h2>
-      <hr>
-    <div class="ms-4">
-      <button data-bs-toggle="modal" data-bs-target="#addpost" class="btn btn-success my-2">Create job Post</button>
-      <button class="btn btn-success my-2">My Job Posts</button>
-      <button class="btn btn-success my-2">My  Wish list</button>
-      <button class="btn btn-success my-2">My Connects</button>
-    </div>
-    </div>
-    <div class="menu p-3">
+      <div class="sidebar">
+          <h2 class="text-uppercase text-primary ms-4 mt-3">Dashboard</h2>
+          <button data-bs-target="#addpost" data-bs-toggle="modal" class="btn btn-primary float-end position-relative">Add Post<i style="font-size: 30px;" class="bi bi-plus-lg"></i>
+          </button>
+        <br>
+        <br>
+        <div class="m-4">
+          <p class="fs-3">My Connections</p>
+          <p class="fs-4">Adam Fondo</p>
+          <p>
+            <i style="font-size: 32px;" class="bi bi-telephone-fill"></i>
+            0746014945
+          </p>
+          <p>
+            <i style="font-size: 32px;" class="bi bi-envelope-at"></i>
+            abukbt13@gmail.com
+          </p>
+        </div>
+
+      </div>
+      <div class="menu p-3">
       <div class="">
         <div class="row d-flex w-100">
           <div style=" padding: 1rem;"  class="col-md-4 stretch-card grid-margin">
@@ -123,7 +150,7 @@ onMounted( ()=>{
               </div>
               <div class="d-flex justify-content-between">
                 <button class="btn mx-4 my-2 btn-info">More</button>
-                <button class="btn mx-4 my-2 btn-success">Connect</button>
+                <button class="btn mx-4 my-2 btn-success" data-bs-toggle="modal" @click="assignEmployer_id(user.id)" data-bs-target="#connect">Connect</button>
               </div>
             </div>
 
@@ -132,6 +159,8 @@ onMounted( ()=>{
       </div>
     </div>
   </div>
+
+
   <div class="modal fade" id="addpost" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -151,8 +180,8 @@ onMounted( ()=>{
               <input type="number" class="form-control" v-model="payment_amount">
             </div>
             <div class="mb-3">
-              <label for="exampleFormControlTextarea1" class="form-label">Payment</label>
-              <input type="number" class="form-control" v-model="payment">
+              <label for="exampleFormControlTextarea1" class="form-label">Payment Mode</label>
+              <input type="text" class="form-control" v-model="payment">
             </div>
             <div class="mb-3">
               <label for="exampleFormControlTextarea1" class="form-label">Skills needed</label>
@@ -168,10 +197,28 @@ onMounted( ()=>{
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button  style="background-color: greenyellow;" type="submit"  data-bs-dismiss="modal" class="btn   btn-block text-uppercase">Add Referee<i style="font-size" class="bi bi-plus float-end"></i>
+            <button  style="background-color: greenyellow;" type="submit"  data-bs-dismiss="modal" class="btn   btn-block text-uppercase">Add Post<i style="font-size" class="bi bi-plus float-end"></i>
             </button>
           </div>
         </form>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="connect" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Connect with Jobseeker</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+       <div class="modal-body">
+         <form @submit.prevent="connectEmployer">
+           <p>Pay connecting fee of ksh 200 to be fully connected with the job seeker</p>
+           <h5 for="">Enter Your phone Number to continue </h5>
+           <input type="text" class="form-control" placeholder="phone eg 0728548760">
+           <button data-bs-dismiss="modal" class="btn btn-primary text-primary text-white float-end my-2">Continue</button>
+         </form>
+       </div>
       </div>
     </div>
   </div>
@@ -199,11 +246,19 @@ onMounted( ()=>{
 }
 
 .sidebar{
-  background-color:cornflowerblue;
-  height:100vh;
-  width:20vw;
+  border-right: 2px solid #ddd;
+
+  min-height: 70vh;
+  max-height: 80vh;
+
+  overflow: scroll;
+  width:27vw;
 }
 .menu{
   width:100vw;
+  height:100vh;
+  min-height: 100vh;
+  max-height: 100vh;
+  overflow: scroll;
 }
 </style>
