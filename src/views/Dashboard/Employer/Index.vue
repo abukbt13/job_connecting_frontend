@@ -14,11 +14,33 @@ const payment = ref('')
 const skills = ref('')
 const job_seeker_id = ref('')
 const payment_amount = ref('')
+const my_posts = ref('')
+const my_connect_now = ref('')
+const my_connects = ref([])
 
 const   fetchJobseekers = async () => {
   const res= await axios.get(base_url.value+'show_job_seekers', authHeader)
   if(res.status === 200){
     jobseekers.value = res.data.data
+  }
+}
+const   fetch_my_posts   = async () => {
+  const res= await axios.get(base_url.value+'posts/show_my_posts', authHeader)
+  if(res.status === 200){
+    my_posts.value = res.data.post
+  }
+}
+const   my_Connects   = async () => {
+  const res= await axios.get(base_url.value+'posts/my_connects', authHeader)
+  if(res.status === 200){
+    my_connect_now.value = res.data.connects
+  }
+}
+
+const   fetchMyconnects   = async () => {
+  const res= await axios.get(base_url.value+'posts/show_my_connects', authHeader)
+  if(res.status === 200){
+    my_connects.value = res.data.connects
   }
 }
 
@@ -31,11 +53,14 @@ const createPost = async () => {
   formData.append('skills', skills.value);
   formData.append('payment_amount', payment_amount.value);
 
-  const res = await axios.post(base_url.value + 'post_job', formData, authHeader);
+  const res = await axios.post(base_url.value + 'post/post_job', formData, authHeader);
 
   if (res.status === 200) {
+    await fetch_my_posts()
     if(res.data.status == 'success') {
+
       status.value = 'Post created successfully!'
+
     }
     else {
       status.value= res.data.message;
@@ -52,14 +77,17 @@ const connectEmployer = async () => {
 
   const formData = new FormData();
   formData.append('job_seeker_id', job_seeker_id.value)
-  const res = await axios.post(base_url.value + 'job_seeker/connect_employer', formData,authHeader)
+  const res = await axios.post(base_url.value + 'job_seeker/connect_job_seeker', formData,authHeader)
   status.value= 'Connection established successfully'
   if (res.data.status == 'success'){
     status.value= 'Connection established successfully'
   }
 }
 onMounted( ()=>{
+  my_Connects()
   fetchJobseekers()
+  fetch_my_posts()
+  fetchMyconnects()
 })
 </script>
 
@@ -69,20 +97,19 @@ onMounted( ()=>{
   <div class="d-flex">
       <div class="sidebar">
           <h2 class="text-uppercase text-primary ms-4 mt-3">Dashboard</h2>
-          <button data-bs-target="#addpost" data-bs-toggle="modal" class="btn btn-primary float-end position-relative">Add Post<i style="font-size: 30px;" class="bi bi-plus-lg"></i>
-          </button>
-        <br>
-        <br>
-        <div class="m-4">
-          <p class="fs-3">My Connections</p>
-          <p class="fs-4">Adam Fondo</p>
+        <div class="container"><p class="fs-3">My Connections</p></div>
+
+        <div class="m-4 border-bottom" v-for="my_connect in my_connects" :key="my_connect">
+
+          <p class="fs-4">First Name:{{ my_connect.firstName }} </p>
+          <p class="fs-4">Last Name:{{ my_connect.lastName }} </p>
           <p>
             <i style="font-size: 32px;" class="bi bi-telephone-fill"></i>
-            0746014945
+            {{ my_connect.phone }}
           </p>
           <p>
             <i style="font-size: 32px;" class="bi bi-envelope-at"></i>
-            abukbt13@gmail.com
+            {{  my_connect.email }}
           </p>
         </div>
 
@@ -105,8 +132,9 @@ onMounted( ()=>{
               <div class="card-body">
                 <h4 class="font-weight-normal mb-3">My Posts <i class="mdi mdi-bookmark-outline mdi-24px float-right"></i>
                 </h4>
-                <h2 class="mb-5">45</h2>
-                <button class="btn btn-primary">Create a Job post</button>
+                <h2 class="mb-5">{{my_posts}}</h2>
+                <button data-bs-target="#addpost" data-bs-toggle="modal" class="btn btn-primary float-end position-relative">Add Post<i style="font-size: 20px;" class="bi bi-plus-lg"></i>
+                </button>
               </div>
             </div>
           </div>
@@ -115,7 +143,7 @@ onMounted( ()=>{
               <div class="card-body">
                 <h4 class="font-weight-normal mb-3">My Connects <i class="mdi mdi-diamond mdi-24px float-right"></i>
                 </h4>
-                <h2 class="mb-5">95</h2>
+                <h2 class="mb-5">{{ my_connect_now }}</h2>
                 <button class="btn btn-primary">view</button>
               </div>
             </div>
@@ -181,7 +209,12 @@ onMounted( ()=>{
             </div>
             <div class="mb-3">
               <label for="exampleFormControlTextarea1" class="form-label">Payment Mode</label>
-              <input type="text" class="form-control" v-model="payment">
+              <select v-model="payment" class="form-control">
+                <option value="" disabled selected>---select payment---</option>
+                <option value="fixed">Fixed</option>
+                <option value="negotiable">Negotiable</option>
+              </select>
+
             </div>
             <div class="mb-3">
               <label for="exampleFormControlTextarea1" class="form-label">Skills needed</label>

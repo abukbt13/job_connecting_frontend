@@ -17,10 +17,12 @@ function assignEmployer_id($post){
 
       const formData = new FormData();
       formData.append('employer_id', employer_id.value)
-      const res = await axios.post(base_url.value + 'job_seeker/connect', formData,authHeader)
-      status.value= 'Connection established successfully'
+      const res = await axios.post(base_url.value + 'job_seeker/connect_employer', formData,authHeader)
      if (res.data.status == 'success'){
        status.value= 'Connection established successfully'
+     }
+     else {
+       status.value = res.data.message
      }
     }
 const getPosts = async () => {
