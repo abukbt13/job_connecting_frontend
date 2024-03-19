@@ -4,7 +4,11 @@ import {onMounted, ref} from "vue";
 
 import {user} from "@/Composables/user.js";
 import Header from "@/components/Header.vue";
+import {auth} from "@/Composables/auth.js";
+import {reuse} from "@/Composables/reuse.js";
 const {base_url,authHeader,storage} =user()
+const {authUser} =auth()
+const {my_Connects,my_connect_now} =reuse()
 
 const jobseekers = ref([])
 const description = ref('')
@@ -14,8 +18,8 @@ const payment = ref('')
 const skills = ref('')
 const job_seeker_id = ref('')
 const payment_amount = ref('')
+const notification = ref([])
 const my_posts = ref('')
-const my_connect_now = ref('')
 const my_connects = ref([])
 
 const   fetchJobseekers = async () => {
@@ -30,17 +34,19 @@ const   fetch_my_posts   = async () => {
     my_posts.value = res.data.post
   }
 }
-const   my_Connects   = async () => {
-  const res= await axios.get(base_url.value+'posts/my_connects', authHeader)
-  if(res.status === 200){
-    my_connect_now.value = res.data.connects
-  }
-}
+
+
 
 const   fetchMyconnects   = async () => {
   const res= await axios.get(base_url.value+'posts/show_my_connects', authHeader)
   if(res.status === 200){
     my_connects.value = res.data.connects
+  }
+}
+const   Notifications   = async () => {
+  const res= await axios.get(base_url.value+'e_notifications', authHeader)
+  if(res.status === 200){
+    notification.value = res.data
   }
 }
 
@@ -85,6 +91,8 @@ const connectEmployer = async () => {
 }
 onMounted( ()=>{
   my_Connects()
+  Notifications()
+  authUser()
   fetchJobseekers()
   fetch_my_posts()
   fetchMyconnects()
@@ -93,7 +101,7 @@ onMounted( ()=>{
 
 <template>
   <Header />
-  <div style="background-color: #05fa26;" class="p-2 text-uppercase text-primary text-center" v-if="status">{{status}}</div>
+  <div  class="my-1 p-2 bg-success text-uppercase text-white text-center" v-if="status">{{status}}</div>
   <div class="d-flex">
       <div class="sidebar">
           <h2 class="text-uppercase text-primary ms-4 mt-3">Dashboard</h2>
@@ -117,16 +125,19 @@ onMounted( ()=>{
       <div class="menu p-3">
       <div class="">
         <div class="row d-flex w-100">
+
           <div style=" padding: 1rem;"  class="col-md-4 stretch-card grid-margin">
             <div style="background-color: #f2b722;"  class="card bg-gradient-danger card-img-holder">
               <div class="card-body">
                 <h4 class="font-weight-normal mb-3">Notifications <i class="mdi mdi-chart-line mdi-24px float-right"></i>
                 </h4>
-                <h2 class="mb-5">50</h2>
-                <button class="btn btn-primary">View</button>
+                <h2 class="mb-5">{{notification.count}}</h2>
+                <button  data-bs-target="#notification" data-bs-toggle="modal" class="btn btn-primary">View</button>
               </div>
             </div>
           </div>
+
+
           <div  style=" padding: 1rem;"  class="col-md-4 stretch-card grid-margin">
             <div style="background-color: #de7af0;"  class="card bg-gradient-info card-img-holder">
               <div class="card-body">
@@ -138,6 +149,8 @@ onMounted( ()=>{
               </div>
             </div>
           </div>
+
+
           <div  style=" padding: 1rem;"  class="col-md-4 stretch-card grid-margin">
             <div style="background-color: #827e74;"  class="card bg-gradient-success card-img-holder">
               <div class="card-body">
@@ -151,6 +164,9 @@ onMounted( ()=>{
         </div>
       </div>
       <hr>
+
+
+
 
       <div class="bg-light job_seekers p-4">
           <div v-for="user in jobseekers" :key="user" class="card" style="width: 18rem;">
@@ -201,7 +217,7 @@ onMounted( ()=>{
 
             <div class="mb-3">
               <label for="exampleFormControlTextarea1" class="form-label">Description</label>
-              <input type="text" class="form-control" v-model="description">
+              <textarea  id="" rows="4" class="form-control" v-model="description"></textarea>
             </div>
             <div class="mb-3">
               <label for="exampleFormControlTextarea1" class="form-label">Payment Amount</label>
@@ -222,7 +238,12 @@ onMounted( ()=>{
             </div>
             <div class="mb-3">
               <label for="exampleFormControlTextarea1" class="form-label">Priority</label>
-              <input type="text" class="form-control" v-model="priority">
+              <select v-model="priority" class="form-control">
+                <option value="" disabled selected>---select payment---</option>
+                <option value="high">High</option>
+                <option value="medium">Medium</option>
+                <option value="low">low</option>
+              </select>
             </div>
 
 
@@ -252,6 +273,17 @@ onMounted( ()=>{
            <button data-bs-dismiss="modal" class="btn btn-primary text-primary text-white float-end my-2">Continue</button>
          </form>
        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="notification" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Notification</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+       <p>{{notification}}</p>
       </div>
     </div>
   </div>

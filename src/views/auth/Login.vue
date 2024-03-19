@@ -25,13 +25,13 @@ const login = async () => {
     if (res.data.status === 'success') {
       localStorage.setItem('token', res.data.token);
       if (res.data.user.role === 'job_seeker') {
-        await router.push('/j/dashboard');
+        location.href = '/j/dashboard/'
       }
       else if (res.data.user.role === 'employer'){
-        await router.push('/e/dashboard');
+        location.href = '/e/dashboard/'
       }
       else {
-        await router.push('/Admin/dashboard');
+        location.href = '/Admin/dashboard/'
       }
 
       // await router.push('/');
