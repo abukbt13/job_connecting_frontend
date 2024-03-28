@@ -21,6 +21,7 @@ const payment_amount = ref('')
 const notification = ref([])
 const my_posts = ref('')
 const my_connects = ref([])
+const allposts = ref([])
 
 const   fetchJobseekers = async () => {
   const res= await axios.get(base_url.value+'show_job_seekers', authHeader)
@@ -32,6 +33,7 @@ const   fetch_my_posts   = async () => {
   const res= await axios.get(base_url.value+'posts/show_my_posts', authHeader)
   if(res.status === 200){
     my_posts.value = res.data.post
+    allposts.value = res.data.myposts
   }
 }
 
@@ -40,7 +42,7 @@ const   fetch_my_posts   = async () => {
 const   fetchMyconnects   = async () => {
   const res= await axios.get(base_url.value+'posts/show_my_connects', authHeader)
   if(res.status === 200){
-    my_connects.value = res.data.connects
+    my_connects.value = res
   }
 }
 const   Notifications   = async () => {
@@ -144,6 +146,8 @@ onMounted( ()=>{
                 <h4 class="font-weight-normal mb-3">My Posts <i class="mdi mdi-bookmark-outline mdi-24px float-right"></i>
                 </h4>
                 <h2 class="mb-5">{{my_posts}}</h2>
+                <button data-bs-target="#viewPosts" data-bs-toggle="modal" class="btn btn-secondary  position-relative">View<i style="font-size: 20px;color:blue;" class="bi bi-eye"></i>
+                </button>
                 <button data-bs-target="#addpost" data-bs-toggle="modal" class="btn btn-primary float-end position-relative">Add Post<i style="font-size: 20px;" class="bi bi-plus-lg"></i>
                 </button>
               </div>
@@ -203,6 +207,42 @@ onMounted( ()=>{
       </div>
     </div>
   </div>
+
+
+  <div class="modal fade" id="viewPosts" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">My Posts</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="table-responsive">
+          <table class="table table-bordered">
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Description</th>
+              <th scope="col">Payment Amount</th>
+              <th scope="col">Payment mode</th>
+              <th scope="col">Priority</th>
+              <th colspan="2"></th>
+            </tr>
+            <tr v-for="allpost in allposts" :key="allpost">
+              <td>{{allpost.id}}</td>
+              <td><textarea name="" id="">{{allpost.description}}</textarea></td>
+              <td>{{allpost.payment}}</td>
+              <td>{{allpost.payment_amount}}</td>
+              <td>{{allpost.priority}}</td>
+              <td><button class="btn bg-danger">Delete</button></td>
+              <td><button class="btn bg-primary">Update</button></td>
+            </tr>
+          </table>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
 
 
   <div class="modal fade" id="addpost" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
