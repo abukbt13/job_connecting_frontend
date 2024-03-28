@@ -8,9 +8,8 @@ import {auth} from "@/Composables/auth.js";
 import {reuse} from "@/Composables/reuse.js";
 const {base_url,authHeader,storage} =user()
 const {authUser} =auth()
-const {my_Connects,my_connect_now} =reuse()
+const {my_Connects,my_connect_now,fetch_e_Connect,e_connects} =reuse()
 
-const jobseekers = ref([])
 const description = ref('')
 const status = ref('')
 const priority = ref('')
@@ -23,12 +22,6 @@ const my_posts = ref('')
 const my_connects = ref([])
 const allposts = ref([])
 
-const   fetchJobseekers = async () => {
-  const res= await axios.get(base_url.value+'show_job_seekers', authHeader)
-  if(res.status === 200){
-    jobseekers.value = res.data.data
-  }
-}
 const   fetch_my_posts   = async () => {
   const res= await axios.get(base_url.value+'posts/show_my_posts', authHeader)
   if(res.status === 200){
@@ -37,21 +30,12 @@ const   fetch_my_posts   = async () => {
   }
 }
 
-
-
-const   fetchMyconnects   = async () => {
-  const res= await axios.get(base_url.value+'posts/show_my_connects', authHeader)
-  if(res.status === 200){
-    my_connects.value = res
-  }
-}
 const   Notifications   = async () => {
   const res= await axios.get(base_url.value+'e_notifications', authHeader)
   if(res.status === 200){
     notification.value = res.data
   }
 }
-
 
 const createPost = async () => {
   const formData = new FormData();
@@ -95,9 +79,8 @@ onMounted( ()=>{
   my_Connects()
   Notifications()
   authUser()
-  fetchJobseekers()
   fetch_my_posts()
-  fetchMyconnects()
+  fetch_e_Connect()
 })
 </script>
 
@@ -109,7 +92,7 @@ onMounted( ()=>{
           <h2 class="text-uppercase text-primary ms-4 mt-3">Dashboard</h2>
         <div class="container"><p class="fs-3">My Connections</p></div>
 
-        <div class="m-4 border-bottom" v-for="my_connect in my_connects" :key="my_connect">
+        <div style="border-bottom: 2px solid #ddf" class="m-4 border-bottom" v-for="my_connect in e_connects" :key="my_connect">
 
           <p class="fs-4">First Name:{{ my_connect.firstName }} </p>
           <p class="fs-4">Last Name:{{ my_connect.lastName }} </p>
@@ -139,7 +122,6 @@ onMounted( ()=>{
             </div>
           </div>
 
-
           <div  style=" padding: 1rem;"  class="col-md-4 stretch-card grid-margin">
             <div style="background-color: #de7af0;"  class="card bg-gradient-info card-img-holder">
               <div class="card-body">
@@ -153,7 +135,6 @@ onMounted( ()=>{
               </div>
             </div>
           </div>
-
 
           <div  style=" padding: 1rem;"  class="col-md-4 stretch-card grid-margin">
             <div style="background-color: #827e74;"  class="card bg-gradient-success card-img-holder">
@@ -171,40 +152,11 @@ onMounted( ()=>{
 
 
 
+        <div class="">
+          <router-view />
+        </div>
 
-      <div class="bg-light job_seekers p-4">
-          <div v-for="user in jobseekers" :key="user" class="card" style="width: 18rem;">
-            <img style="border-radius: 30%;padding: 1rem;" :src="storage+user.picture" class="card-img-top" alt="...">
-            <div class="card-body">
-              <div class="d-flex">
-                <div class="">
-                  <h5>Name</h5>
-                  <p>{{user.firstName}} {{user.lastName}}</p>
-                </div>
-                <div class="ms-4">
-                  <h5>Gender</h5>
-                  <p style="font-size: 20px;" class="card-text">Male</p>
-                </div>
-              </div>
-              <div class="d-flex">
-                <div class="">
-                  <h5>County</h5>
-                  <p>{{user.county}}</p>
-                </div>
-                <div class="ms-4">
-                  <h5>Sub County</h5>
-                  <p style="font-size: 20px;" class="card-text">{{user.sub_county}}</p>
-                </div>
-              </div>
-              <div class="d-flex justify-content-between">
-                <button class="btn mx-4 my-2 btn-info">More</button>
-                <button class="btn mx-4 my-2 btn-success" data-bs-toggle="modal" @click="assignEmployer_id(user.id)" data-bs-target="#connect">Connect</button>
-              </div>
-            </div>
 
-          </div>
-
-      </div>
     </div>
   </div>
 
@@ -333,22 +285,6 @@ onMounted( ()=>{
 
 
 <style scoped>
-.job_seekers {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-}
-
-@media screen and (max-width: 768px) {
-  .job_seekers {
-    grid-template-columns: 1fr 1fr;
-  }
-}
-
-@media screen and (max-width: 408px) {
-  .job_seekers {
-    grid-template-columns: 1fr;
-  }
-}
 
 .sidebar{
   border-right: 2px solid #ddd;

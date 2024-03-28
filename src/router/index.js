@@ -11,6 +11,8 @@ import RecentlyPosted from "@/views/Dashboard/Job_Seeker/RecentlyPosted.vue";
 import Bestmatches from "@/views/Dashboard/Job_Seeker/Bestmatches.vue";
 import Profiles from "@/views/Dashboard/User/Profiles.vue"
 import SavedConnects from "@/views/Dashboard/Job_Seeker/SavedConnects.vue";
+import Suggested from "@/views/Dashboard/Employer/Suggested.vue";
+import All from "@/views/Dashboard/Employer/All.vue";
 const router = createRouter({  history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
@@ -45,9 +47,19 @@ const router = createRouter({  history: createWebHistory(import.meta.env.BASE_UR
     },
     {
       path: '/e/dashboard',
-      component: employer_Dashboard
+      component: employer_Dashboard,
+      children:
+       [
+        {
+          path: '/e/dashboard',
+          component:Suggested,
+        },
+        {
+          path: 'all',
+          component:All,
+        }
+       ]
     },
-
     {
       path: '/J/dashboard',
       component: Job_seeker,
