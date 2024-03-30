@@ -19,10 +19,10 @@ onMounted( ()=>{
 <template>
 <Header />
   <div  class="main_contents">
-       <div style="height: 100vh;min-height: 100vh;max-height: 100vh;overflow: scroll;" class="ms-4 bg-light">
+       <div style="width: 65%; height: 100vh;min-height: 100vh;max-height: 100vh;overflow: scroll;" class="ms-4 bg-light">
          <router-view />
        </div>
-    <div  class="p-4 connects  d-sm-none d-md-block d-lg-block bg-light">
+       <div  class="p-4 connects  d-sm-none d-md-block d-lg-block bg-light">
      <h2 class="text-primary  text-uppercase position-fixed text-center">My Connects<b class="text-success p-1">{{j_connect_now}}</b></h2>
      <div style="height: 100vh; margin-top: 5rem;" class="d-flex flex-column justify-content-center ">
 
@@ -42,7 +42,7 @@ onMounted( ()=>{
      </div>
     </div>
 
-    <i style="right: 0.5rem; margin-top:0.5rem; font-size: 33px;" class="bi bg-primary bi-justify-right position-absolute position-fixed  d-sm-block d-md-none d-lg-none" @click="showMore">more</i>
+       <i style="right: 0.5rem; margin-top:0.5rem; font-size: 33px;" class="bi bg-primary bi-justify-right position-absolute position-fixed  d-sm-block d-md-none d-lg-none" @click="showMore">more</i>
 
   </div>
 
@@ -53,10 +53,11 @@ onMounted( ()=>{
 
 <style scoped>
 .main_contents{
+  width: 100%;
   display:flex;
 }
 .connects{
-  width:40rem;
+  width: 25%;
   background-color: #9eeaf9;
 }
 

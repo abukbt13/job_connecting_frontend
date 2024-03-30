@@ -8,10 +8,28 @@ import {auth} from "@/Composables/auth.js";
 const {base_url,authHeader,storage} =auth()
 
 const jobseekers = ref([])
+const job_seeker_id = ref('')
+const status = ref('')
+
 const   fetchJobseekers = async () => {
   const res= await axios.get(base_url.value+'show_job_seekers', authHeader)
   if(res.status === 200){
     jobseekers.value = res.data.data
+  }
+}
+
+function assignEmployer_id($post){
+  job_seeker_id.value=$post
+}
+
+const connectEmployer = async () => {
+
+  const formData = new FormData();
+  formData.append('job_seeker_id', job_seeker_id.value)
+  const res = await axios.post(base_url.value + 'job_seeker/connect_job_seeker', formData,authHeader)
+  status.value= 'Connection established successfully'
+  if (res.data.status == 'success'){
+    status.value= 'Connection established successfully'
   }
 }
 
@@ -67,7 +85,26 @@ onMounted( ()=> {
     </div>
 
   </div>
-</template>
+    <div class="modal fade" id="connect" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Connect with Jobseeker</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form @submit.prevent="connectEmployer">
+              <p>Pay connecting fee of ksh 200 to be fully connected with the job seeker</p>
+              <h5 for="">Enter Your phone Number to continue </h5>
+              <input type="text" class="form-control" placeholder="phone eg 0728548760">
+              <button data-bs-dismiss="modal" class="btn btn-primary text-primary text-white float-end my-2">Continue</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </template>
 
 
 <style scoped>

@@ -23,31 +23,31 @@ onMounted(()=>{
 </script>
 
 <template>
-    <nav style="background-color: rgb(202, 222, 24);" class="navbar sticky-top navbar-expand-lg">
+    <nav style="background-color: #d538fc;" class="navbar sticky-top navbar-expand-lg">
       <div class="container-fluid m-auto">
-        <router-link class="navbar-brand text-primary" to="/">Connect Me</router-link>
+        <router-link class="navbar-brand text-white" to="/">Connect Me</router-link>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
           <ul class="navbar-nav">
             <li class="nav-item text-primary">
-              <router-link class="nav-link active  text-primary text-uppercase" to="/">Home</router-link>
+              <router-link class="nav-link active  text-white text-uppercase" to="/">Home</router-link>
             </li>
             <div class="d-flex" v-if="details">
                 <div v-if="details.role == 'job_seeker'" class="">
                   <li class="nav-item text-uppercase">
-                    <router-link class="nav-link text-primary" to="/J/dashboard">Dashboard</router-link>
+                    <router-link class="nav-link text-white" to="/J/dashboard">Dashboard</router-link>
                   </li>
                 </div>
                  <div v-else-if="details.role == 'employer'" class="">
                    <li class="nav-item text-uppercase">
-                     <router-link class="nav-link text-primary" to="/e/dashboard">Dashboard</router-link>
+                     <router-link class="nav-link text-white" to="/e/dashboard">Dashboard</router-link>
                    </li>
                  </div>
               <div v-else class="">
                 <li class="nav-item text-uppercase">
-                  <router-link class="nav-link text-primary" to="/J/dashboard">Dashboard</router-link>
+                  <router-link class="nav-link text-white" to="/J/dashboard">Dashboard</router-link>
                 </li>
               </div>
 

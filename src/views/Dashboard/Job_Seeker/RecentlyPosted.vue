@@ -7,6 +7,7 @@ import axios from "axios";
 const {authHeader,authUser,base_url,storage} =auth();
 const posts = ref([])
 const status = ref('')
+const phone = ref('')
 const user_id = ref('')
 const employer_id = ref('')
 const moreDeetails = ref([])
@@ -17,18 +18,18 @@ function assignEmployer_id($post){
 }
 
 
-    const connectEmployer = async () => {
-
-          const formData = new FormData();
-          formData.append('employer_id', employer_id.value)
-          const res = await axios.post(base_url.value + 'job_seeker/connect_employer', formData,authHeader)
-         if (res.data.status == 'success'){
-           status.value= 'Connection established successfully'
-         }
-         else {
-           status.value = res.data.message
-         }
+const connectEmployer = async () => {
+      const formData = new FormData();
+      formData.append('employer_id', employer_id.value)
+      formData.append('phone', phone.value)
+      const res = await axios.post(base_url.value + 'job_seeker/connect_employer', formData,authHeader)
+     if (res.data.status == 'success'){
+       status.value= 'Connection established successfully'
      }
+     else {
+       status.value = res.data.message
+     }
+ }
 
   const getPosts = async () => {
     const response = await axios.get(base_url.value+'show_posts', authHeader);
@@ -58,10 +59,6 @@ onMounted(()=>{
     </li>
     <li class="nav-item mt-3">
       <router-link to="/j/dashboard/best_match" class="nav-link " aria-current="page">Best Matches</router-link>
-    </li>
-
-    <li class="nav-item mt-3">
-      <router-link to="/j/dashboard/saved_connect" class="nav-link " aria-current="page">Saved Jobs</router-link>
     </li>
     <li class="nav-item">
           <span class="position-relative">
@@ -166,15 +163,15 @@ onMounted(()=>{
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">Complete Connecting</h1>
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Finish Connecting</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
           <form @submit.prevent="connectEmployer">
-            <p>To get personal details like phone number you need to pay ksh 200 </p>
-            <h5 for="">Enter Your phone Number to continue </h5>
-            <input type="text" class="form-control" placeholder="phone eg 0728548760">
-            <button data-bs-dismiss="modal" class="btn btn-primary text-primary text-white float-end my-2">Continue</button>
+            <p>By paying  ksh 200 you will be able to have full details of the job seeker </p>
+            <h5 for="">Enter Your phone </h5>
+            <input type="text" class="form-control" required v-model="phone" placeholder="phone eg 0728548760">
+            <button type="submit" data-bs-dismiss="modal" class="btn btn-primary text-primary text-white float-end my-2">Continue</button>
           </form>
         </div>
 

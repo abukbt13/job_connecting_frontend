@@ -71,10 +71,6 @@ const router = createRouter({  history: createWebHistory(import.meta.env.BASE_UR
         {
           path: 'best_match',
           component: Bestmatches,
-        },
-        {
-          path: 'saved_connect',
-          component: SavedConnects,
         }
       ]
     },
