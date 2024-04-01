@@ -34,7 +34,7 @@ onMounted(()=>{
             <li class="nav-item text-primary">
               <router-link class="nav-link active  text-white text-uppercase" to="/">Home</router-link>
             </li>
-            <div class="d-flex" v-if="details">
+            <div class="d-flex" v-if="username">
                 <div v-if="details.role == 'job_seeker'" class="">
                   <li class="nav-item text-uppercase">
                     <router-link class="nav-link text-white" to="/J/dashboard">Dashboard</router-link>
