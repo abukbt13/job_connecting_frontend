@@ -47,7 +47,7 @@ onMounted(()=>{
                  </div>
               <div v-else class="">
                 <li class="nav-item text-uppercase">
-                  <router-link class="nav-link text-white" to="/J/dashboard">Dashboard</router-link>
+                  <router-link class="nav-link text-white" to="/admin/dashboard">Dashboard</router-link>
                 </li>
               </div>
 

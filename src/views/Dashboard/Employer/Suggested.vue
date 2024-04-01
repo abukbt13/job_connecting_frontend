@@ -4,12 +4,14 @@
 import axios from "axios";
 import {onMounted, ref} from "vue";
 import {auth} from "@/Composables/auth.js";
+import {useRouter} from "vue-router";
 
 const {base_url,authHeader,storage} =auth()
-
+const router = useRouter()
 const jobseekers = ref([])
 const job_seeker_id = ref('')
 const status = ref('')
+const user_id = ref('')
 
 function assignEmployer_id($post){
   job_seeker_id.value=$post
@@ -29,6 +31,10 @@ const connectEmployer = async () => {
   if (res.data.status == 'success'){
     status.value= 'Connection established successfully'
   }
+}
+function showMore($data){
+  user_id.value = $data.id
+  router.push('/user/more/'+user_id.value)
 }
 onMounted( ()=> {
   fetchsuggested()
@@ -71,7 +77,7 @@ onMounted( ()=> {
           </div>
         </div>
         <div class="d-flex justify-content-between">
-          <button class="btn mx-4 my-2 btn-info">More</button>
+          <button class="btn mx-4 my-2 btn-info" @click="showMore(user)">More</button>
           <button class="btn mx-4 my-2 btn-success" data-bs-toggle="modal" @click="assignEmployer_id(user.id)" data-bs-target="#connect">Connect</button>
         </div>
       </div>

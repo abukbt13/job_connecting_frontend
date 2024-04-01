@@ -31,7 +31,7 @@ const login = async () => {
         location.href = '/e/dashboard/'
       }
       else {
-        location.href = '/Admin/dashboard/'
+        location.href = '/admin/dashboard'
       }
 
       // await router.push('/');
