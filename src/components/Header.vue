@@ -34,36 +34,36 @@ onMounted(()=>{
             <li class="nav-item text-primary">
               <router-link class="nav-link active  text-white text-uppercase" to="/">Home</router-link>
             </li>
-            <div class="d-flex" v-if="username">
-                <div v-if="details.role == 'job_seeker'" class="">
-                  <li class="nav-item text-uppercase">
-                    <router-link class="nav-link text-white" to="/J/dashboard">Dashboard</router-link>
-                  </li>
-                </div>
-                 <div v-else-if="details.role == 'employer'" class="">
-                   <li class="nav-item text-uppercase">
-                     <router-link class="nav-link text-white" to="/e/dashboard">Dashboard</router-link>
-                   </li>
-                 </div>
-              <div v-else class="">
-                <li class="nav-item text-uppercase">
-                  <router-link class="nav-link text-white" to="/admin/dashboard">Dashboard</router-link>
-                </li>
-              </div>
+<!--            <div class="d-flex" v-if="username">-->
+<!--                <div v-if="details.role == 'job_seeker'" class="">-->
+<!--                  <li class="nav-item text-uppercase">-->
+<!--                    <router-link class="nav-link text-white" to="/J/dashboard">Dashboard</router-link>-->
+<!--                  </li>-->
+<!--                </div>-->
+<!--                 <div v-else-if="details.role == 'employer'" class="">-->
+<!--                   <li class="nav-item text-uppercase">-->
+<!--                     <router-link class="nav-link text-white" to="/e/dashboard">Dashboard</router-link>-->
+<!--                   </li>-->
+<!--                 </div>-->
+<!--              <div v-else class="">-->
+<!--                <li class="nav-item text-uppercase">-->
+<!--                  <router-link class="nav-link text-white" to="/admin/dashboard">Dashboard</router-link>-->
+<!--                </li>-->
+<!--              </div>-->
 
-                  <li class="nav-item text-uppercase">
-                    <img width="50" @click="showProfile = showProfile === false ? true : false" style="border-radius: 50%;" height="50"  :src="'http://127.0.0.1:8000/Profiles/'+details.picture"  alt="">
-                  </li>
+<!--                  <li class="nav-item text-uppercase">-->
+<!--                    <img width="50" @click="showProfile = showProfile === false ? true : false" style="border-radius: 50%;" height="50"  :src="'http://127.0.0.1:8000/Profiles/'+details.picture"  alt="">-->
+<!--                  </li>-->
 
-            </div>
-            <div class="d-flex" v-else>
-              <li class="nav-item d-flex justify-content-center align-items-center text-uppercase">
-                <router-link to="/auth/login" class="text-decoration-none">LOGIN <i style="font-size: 22px" @click="LogOut()" class="bi bi-box-arrow-right"></i></router-link>
-              </li>
-              <li class="nav-item d-flex justify-content-center align-items-center text-uppercase">
-                <router-link to="/auth/register" class="text-decoration-none">Get Started <i style="font-size: 22px" class="bi bi-pen"></i></router-link>
-              </li>
-            </div>
+<!--            </div>-->
+<!--            <div class="d-flex" v-else>-->
+<!--              <li class="nav-item d-flex justify-content-center align-items-center text-uppercase">-->
+<!--                <router-link to="/auth/login" class="text-decoration-none">LOGIN <i style="font-size: 22px" @click="LogOut()" class="bi bi-box-arrow-right"></i></router-link>-->
+<!--              </li>-->
+<!--              <li class="nav-item d-flex justify-content-center align-items-center text-uppercase">-->
+<!--                <router-link to="/auth/register" class="text-decoration-none">Get Started <i style="font-size: 22px" class="bi bi-pen"></i></router-link>-->
+<!--              </li>-->
+<!--            </div>-->
 
 
 
