@@ -3,7 +3,7 @@ import axios from "axios";
 import {onMounted, ref} from "vue";
 
 import {user} from "@/Composables/user.js";
-import Header from "@/views/Header.vue";
+import Header from "@/components/Header.vue";
 import {auth} from "@/Composables/auth.js";
 import {reuse} from "@/Composables/reuse.js";
 const {base_url,authHeader,storage} =user()
