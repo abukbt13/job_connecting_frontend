@@ -2,8 +2,8 @@
 <script setup>
 
 import {auth} from "@/Composables/auth.js";
-import Footer from "@/components/Footer.vue";
-import Header from "@/components/Header.vue";
+import Footer from "@/views/Footer.vue";
+import Header from "@/views/Header.vue";
 import {onMounted, ref} from "vue";
 import {reuse} from "@/Composables/reuse.js";
 import axios from "axios";

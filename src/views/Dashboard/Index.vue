@@ -1,6 +1,6 @@
 
 <script setup>
-import Header from "@/components/Header.vue";
+import Header from "@/views/Header.vue";
 import {onMounted, ref} from "vue";
 import {useRouter} from "vue-router";
 import axios from "axios";

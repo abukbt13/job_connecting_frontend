@@ -2,7 +2,7 @@
 <script setup>
 import {user} from "@/Composables/user.js";
 const {base_url,authHeader,storage} =user()
-import Header from "@/components/Header.vue";
+import Header from "@/views/Header.vue";
 import {onMounted, ref} from "vue";
 import axios from "axios";
 const  email=ref('')
