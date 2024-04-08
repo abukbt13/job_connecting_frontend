@@ -1,11 +1,12 @@
 <script setup>
 import axios from "axios"
 import {onMounted, ref} from 'vue'
-import {useRoute} from "vue-router";
+import {useRoute, useRouter} from "vue-router";
 const password=ref('')
 const c_password=ref('')
 const otp= ref('')
 const route =useRoute()
+const router = useRouter()
 // alert(otp.value)
 otp.value=route.params.id
 const resetPassword = async()=>{
@@ -14,7 +15,8 @@ const resetPassword = async()=>{
   const res=await axios.post(`http://127.0.0.1:8000/api/change_password/${otp.value}`,formData)
   if(res.status===200){
     if(res.data.status==='success'){
-      success.value=res.data.message
+      // success.value=res.data.message
+     await router.push('/auth/reset_password')
     }
     else{
       error.value=res.data.message

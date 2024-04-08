@@ -1,16 +1,19 @@
 <script setup>
     import axios from "axios"
     import{ref} from 'vue'
+    import {useRouter} from "vue-router";
     const email=ref('')
     const error=ref('')
+    const router = useRouter()
     const success=ref('')
     const handleForgotPassword = async()=>{
       const formData = new FormData()
       formData.append('email',email.value)
-        const res=await axios.post('http://127.0.0.1:8000/api/reset_password',formData)
+        const res=await axios.post('http://127.0.0.1:8000/api/auth/forget_password',formData)
       if(res.status===200){
           if(res.data.status==='success'){
-            success.value=res.data.message
+            await router.push('/auth/reset_password')
+            // success.value=res.data.status
           }
           else{
             error.value=res.data.message
@@ -21,6 +24,7 @@
 <template>
 <section class="vh-100">
  <div class="container reset">
+   {{success}}
     <div class=" d-flex align-content-center justify-content-center align-items-center h-100">
           <form @submit.prevent="handleForgotPassword">
               <h3> Forgot password</h3>

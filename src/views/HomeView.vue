@@ -1,10 +1,36 @@
 <script setup>
+import {ref} from "vue";
+
+const token = localStorage.getItem("token");
 import Header from "@/components/Header.vue";
 import Footer from "@/components/Footer.vue";
 </script>
 
 <template>
-  <Header />
+  <div v-if="token" class="">
+    <Header />
+  </div>
+  <div v-else class="">
+    <nav style="background-color: #d538fc;" class="navbar sticky-top navbar-expand-lg">
+      <div class="container-fluid m-auto">
+        <router-link class="navbar-brand text-white" to="/">Connect Me</router-link>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item text-primary">
+              <router-link class="nav-link active  text-white text-uppercase" to="/auth/login">Login</router-link>
+            </li>
+            <li class="nav-item text-primary">
+              <router-link class="nav-link active  text-white text-uppercase" to="/auth/register">Register</router-link>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </div>
+
   <div class="main container">
       <div class="row intro my-2 py-2">
       <div class="col col-md-6 col-lg-6">

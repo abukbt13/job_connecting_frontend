@@ -1,6 +1,33 @@
 
 <script setup>
+import axios from "axios";
+import {ref} from "vue";
+import {auth} from "@/Composables/auth.js";
+const {base_url} =auth();
+const name = ref('')
+const email = ref('')
+const message = ref('')
+const status = ref('')
 
+const saveInquiry = async () => {
+  const formData = new FormData();
+  formData.append('email', email.value)
+  formData.append('name', name.value)
+  formData.append('message', message.value)
+  const res = await axios.post(base_url.value + 'inquire', formData)
+  if(res.status == 200){
+    if (res.data.status == 'success'){
+      status.value= 'Message sent successfully '
+      alert("message sent successfully")
+    }
+    else {
+      status.value = res.data.message
+    }
+  }else {
+    status.value = 'Error in the network connection'
+  }
+
+}
 </script>
 <template>
 
@@ -25,15 +52,15 @@
       </div>
       <div class="col-12 col-md-6 col-lg-4">
         <h3 class="">Contact us</h3>
-        <form action="submit_contact.php" method="post">
+        <form @submit.prevent="saveInquiry" method="post">
           <label for="name">Name:</label><br>
-          <input type="text" id="name" name="name" required><br><br>
+          <input type="text"  v-model="name" required><br><br>
 
           <label for="email">Email:</label><br>
-          <input type="email" id="email" name="email" required><br><br>
+          <input type="email" v-model="email"  required><br><br>
 
           <label for="message">Message:</label><br>
-          <textarea id="message" name="message" rows="4" required></textarea><br><br>
+          <textarea id="message" v-model="message" rows="4" required></textarea><br><br>
 
           <input type="submit" value="Submit">
         </form>
