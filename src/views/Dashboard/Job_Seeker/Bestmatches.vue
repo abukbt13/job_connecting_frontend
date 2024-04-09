@@ -3,6 +3,8 @@
 
 import {auth} from "@/Composables/auth.js";
 import {onMounted, ref} from "vue";
+import {reuse} from "@/Composables/reuse.js";
+const {j_connect_now,j_Connects,my_connects,fetchmyConnect} =reuse()
 import axios from "axios";
 const {authHeader,authUser,base_url,storage} =auth();
 const posts = ref([])
@@ -24,6 +26,8 @@ const connectEmployer = async () => {
   formData.append('phone', phone.value)
   const res = await axios.post(base_url.value + 'job_seeker/connect_employer', formData,authHeader)
   if (res.data.status == 'success'){
+    await getPosts()
+    await  fetchmyConnect()
     status.value= 'Connection established successfully'
   }
   else {
@@ -48,6 +52,8 @@ const  showMore = async ($data)=>{
 
 }
 onMounted(()=>{
+  j_Connects()
+  fetchmyConnect()
   getPosts()
 })
 </script>
@@ -71,38 +77,61 @@ onMounted(()=>{
 
     </li>
   </ul>
-
   <div class="">
+
     <div v-if="status" class=" bg-secondary p-4 text-uppercase text-white">{{status}}</div>
-    <!--    {{posts}}-->
-    <div v-for="post in posts" :key="post" class="posts">
-      <div class="px-4 d-flex">
-        <div style="max-width: 70%; min-width: 60%;" class="">
-          <h2>Description</h2>
-          <p>{{post.description}}</p>
-        </div>
-        <div class="mt-2">
-          <h2 class="text-dark">Payment Mode</h2>
-          {{post.payment}}
-        </div>
-      </div>
-      <div class="d-flex px-4 pb-3 justify-content-between">
-        <div class="">
-          <h3 class="text-dark">Payment Details</h3>
-          {{post.payment_amount}}
-        </div>
-        <div class="">
-          <div class="me-4 mb-4">
-            <button class="btn btn-success mx-4" @click="showMore(post)" data-bs-toggle="modal" data-bs-target="#viewMore" >More Details</button>
-            <button class="btn btn-success" @click="assignEmployer_id(post.user_id)" data-bs-toggle="modal" data-bs-target="#connect" >connect Now</button>
+    <div class="d-flex">
+      <!--    {{posts}}-->
+      <div style="width: 65%; height: 100vh;min-height: 100vh;max-height: 100vh;overflow: scroll;" class="ms-4 bg-light">
+        <div v-for="post in posts" :key="post" class="posts">
+          <div class="px-4 d-flex">
+            <div style="max-width: 70%; min-width: 60%;" class="">
+              <h2>Description</h2>
+              <p>{{post.description}}</p>
+            </div>
+            <div class="mt-2">
+              <h2 class="text-dark">Payment Mode</h2>
+              {{post.payment}}
+            </div>
+          </div>
+          <div class="d-flex px-4 pb-3 justify-content-between">
+            <div class="">
+              <h3 class="text-dark">Payment Details</h3>
+              {{post.payment_amount}}
+            </div>
+            <div class="">
+              <div class="me-4 mb-4">
+                <button class="btn btn-success mx-4" @click="showMore(post)" data-bs-toggle="modal" data-bs-target="#viewMore" >More Details</button>
+                <button class="btn btn-success" @click="assignEmployer_id(post.user_id)" data-bs-toggle="modal" data-bs-target="#connect" >connect Now</button>
+              </div>
+
+            </div>
           </div>
 
         </div>
       </div>
+      <div  class="p-4 connects  d-sm-none d-md-block d-lg-block bg-light">
+        <h2 class="text-primary  text-uppercase position-fixed text-center">
+          My Connects<b class="text-success p-1">{{j_connect_now}}</b>
+        </h2>
+        <div style="height: 100vh; min-height: 100vh;max-height: 100vh;overflow: scroll; margin-top: 5rem;" class="d-flex flex-column justify-content-start ">
 
+          <div style="border-bottom: 2px solid #ddd" v-for="my_connect in my_connects" :key="my_connect">
+            <h2>{{ my_connect.firstName }} {{ my_connect.lastName }}  </h2>
+            <p>
+              <i style="font-size: 32px;" class="bi bi-telephone-fill"></i>
+              {{ my_connect.phone }}
+            </p>
+            <p>
+              <i style="font-size: 32px;" class="bi bi-envelope-at"></i>
+              {{ my_connect.email }}
+            </p>
+          </div>
+
+        </div>
+      </div>
     </div>
   </div>
-
   <!--  modals-->
 
 

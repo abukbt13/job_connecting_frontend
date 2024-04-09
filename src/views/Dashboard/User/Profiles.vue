@@ -177,8 +177,13 @@ onMounted( ()=>{
                       <input type="text" class="form-control" v-model="sub_county">
                     </div>
                     <div class="mb-3">
-                      <label for="exampleFormControlTextarea1" class="form-label">Gender</label>
-                      <input type="gender" class="form-control" v-model="gender">
+                      <label for="exampleFormControlTextarea1" class="form-label">My Gender</label>
+                      <select v-model="gender" class="form-control">
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                        <option value="other">Other</option>
+                      </select>
+
                     </div>
                     <div class="mb-3">
                       <label for="exampleFormControlTextarea1" class="form-label">Upload Profile</label>

@@ -1,41 +1,27 @@
-
 <script setup>
+
 
 import axios from "axios";
 import {onMounted, ref} from "vue";
 import {auth} from "@/Composables/auth.js";
+import {useRouter} from "vue-router";
 
 const {base_url,authHeader,storage} =auth()
-
+const router = useRouter()
 const jobseekers = ref([])
 const job_seeker_id = ref('')
 const status = ref('')
 const user_id = ref('')
-const moreDeetails = ref([])
-const userDetails = ref([])
 
+function assignEmployer_id($post){
+  job_seeker_id.value=$post
+}
 const   fetchsuggested = async () => {
   const res= await axios.get(base_url.value+'suggested_job_seekers', authHeader)
   if(res.status === 200){
     jobseekers.value = res.data.job_seekers
   }
 }
-
-function assignEmployer_id($post){
-  job_seeker_id.value=$post
-}
-
-const  showMore = async ($data)=>{
-  moreDeetails.value=$data
-  user_id.value=$data.id
-  const response = await axios.get(base_url.value+'j_details/'+user_id.value, authHeader);
-  if(response.status === 200){
-    userDetails.value=response.data.user
-  }
-  const res = await axios.get(base_url.value+'notify_user/'+user_id.value, authHeader);
-
-}
-
 const connectEmployer = async () => {
 
   const formData = new FormData();
@@ -46,25 +32,25 @@ const connectEmployer = async () => {
     status.value= 'Connection established successfully'
   }
 }
-
+function showMore($data){
+  user_id.value = $data.id
+  router.push('/user/more/'+user_id.value)
+}
 onMounted( ()=> {
   fetchsuggested()
 })
 </script>
 
-
 <template>
   <ul class="nav nav-underline">
-    <ul class="nav nav-underline">
-      <li class="nav-item">
-        <router-link to="/e/dashboard/"  class="nav-link active" aria-current="page">Suggested job seekers</router-link>
-      </li>
-      <li class="nav-item">
-        <router-link to="/e/dashboard/all"  class="nav-link">All job seekers</router-link>
-      </li>
-    </ul>
+    <li class="nav-item">
+      <router-link to="/e/dashboard/"  class="nav-link active" aria-current="page">Suggested </router-link>
+    </li>
+    <li class="nav-item">
+      <router-link to="/e/dashboard/all"  class="nav-link" >All</router-link>
+    </li>
   </ul>
-
+  <hr>
 
   <div class="bg-light job_seekers p-4">
     <div v-for="user in jobseekers" :key="user" class="card" style="width: 18rem;">
@@ -91,7 +77,7 @@ onMounted( ()=> {
           </div>
         </div>
         <div class="d-flex justify-content-between">
-          <button class="btn mx-4 my-2 btn-info" @click="showMore(user)" data-bs-target="#viewMore" data-bs-toggle="modal">More details</button>
+          <button class="btn mx-4 my-2 btn-info" @click="showMore(user)" data-bs-toggle ='modal'  data-bs-target="#viewMore">More</button>
           <button class="btn mx-4 my-2 btn-success" data-bs-toggle="modal" @click="assignEmployer_id(user.id)" data-bs-target="#connect">Connect</button>
         </div>
       </div>
@@ -117,32 +103,10 @@ onMounted( ()=> {
       </div>
     </div>
   </div>
-  <div class="modal fade" id="viewMore" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">More info</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
 
-        <h3 class="text-center">About the employer</h3>
-        <div class="d-flex">
-          <div class="p-4">
-            <h5>Full Name <span class="text-secondary ms-2">{{ userDetails.firstName }}</span></h5>
-            <h5>County<span class="text-secondary ms-2">{{ userDetails.county }}</span></h5>
-          </div>
-          <div class="p-4">
-            <h5>Subcounty<span class="text-secondary ms-2">{{ userDetails.sub_county }}</span></h5>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        </div>
-      </div>
-    </div>
-  </div>
 
 </template>
+
 
 
 <style scoped>
