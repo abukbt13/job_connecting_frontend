@@ -11,6 +11,7 @@ const jobseekers = ref([])
 const job_seeker_id = ref('')
 const status = ref('')
 const user_id = ref('')
+const phone = ref('')
 const moreDeetails = ref([])
 const userDetails = ref([])
 
@@ -40,8 +41,11 @@ const connectEmployer = async () => {
 
   const formData = new FormData();
   formData.append('job_seeker_id', job_seeker_id.value)
+  formData.append('phone', phone.value)
+  if(phone.value === '' || phone.value.length<10){
+    return status.value= 'Valid phone number required'
+  }
   const res = await axios.post(base_url.value + 'job_seeker/connect_job_seeker', formData,authHeader)
-  status.value= 'Connection established successfully'
   if (res.data.status == 'success'){
     status.value= 'Connection established successfully'
   }
@@ -65,6 +69,7 @@ onMounted( ()=> {
     </ul>
   </ul>
 
+  <div class="text-uppercase fs-1 text-info" v-if="status">{{status}}</div>
 
   <div class="bg-light job_seekers p-4">
     <div v-for="user in jobseekers" :key="user" class="card" style="width: 18rem;">
@@ -107,11 +112,14 @@ onMounted( ()=> {
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
+
+          <div class=" text-info" v-if="status">{{status}}</div>
+
           <form @submit.prevent="connectEmployer">
             <p>Pay connecting fee of ksh 200 to be fully connected with the job seeker</p>
             <h5 for="">Enter Your phone Number to continue </h5>
-            <input type="text" class="form-control" placeholder="phone eg 0728548760">
-            <button data-bs-dismiss="modal" class="btn btn-primary text-primary text-white float-end my-2">Continue</button>
+            <input type="text" class="form-control"  v-model="phone" placeholder="phone eg 0728548760">
+            <button class="btn btn-primary text-primary text-white float-end my-2">Continue</button>
           </form>
         </div>
       </div>

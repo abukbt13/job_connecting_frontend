@@ -18,6 +18,7 @@ const skills = ref('')
 const job_seeker_id = ref('')
 const payment_amount = ref('')
 const notification = ref([])
+const user_notification = ref([])
 const my_posts = ref('')
 const my_connects = ref([])
 const allposts = ref([])
@@ -34,6 +35,7 @@ const   Notifications   = async () => {
   const res= await axios.get(base_url.value+'e_notifications', authHeader)
   if(res.status === 200){
     notification.value = res.data
+    user_notification.value = res.data.notification
   }
 }
 
@@ -245,7 +247,30 @@ onMounted( ()=>{
           <h1 class="modal-title fs-5" id="exampleModalLabel">Notification</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-       <p>{{notification}}</p>
+
+        <div class="table-responsive">
+
+          <table class="table table-bordered border table-striped-columns">
+            <thead>
+            <tr>
+              <th>FirstName</th>
+              <th>LastName</th>
+              <th>County</th>
+              <th>Picture</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr v-for="user in user_notification" :key="user">
+              <td>{{user.firstName}}</td>
+              <td>{{user.lastName}}</td>
+              <td>{{user.county}}</td>
+              <td><img :src="storage + 'Profiles/' + user.picture" width="60" height="60" alt=""></td>
+
+            </tr>
+            </tbody>
+
+          </table>
+        </div>
       </div>
     </div>
   </div>

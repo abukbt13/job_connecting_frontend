@@ -11,6 +11,7 @@ const jobseekers = ref([])
 const job_seeker_id = ref('')
 const status = ref('')
 const user_id = ref('')
+const phone = ref('')
 const moreDeetails = ref([])
 const userDetails = ref([])
 
@@ -21,27 +22,30 @@ const   fetchJobseekers = async () => {
   }
 }
 
-    function assignEmployer_id($post){
-      job_seeker_id.value=$post
-    }
+function assignEmployer_id($post){
+  job_seeker_id.value=$post
+}
 
-    const  showMore = async ($data)=>{
-          moreDeetails.value=$data
-          user_id.value=$data.id
-          const response = await axios.get(base_url.value+'j_details/'+user_id.value, authHeader);
-          if(response.status === 200){
-            userDetails.value=response.data.user
-          }
-          const res = await axios.get(base_url.value+'notify_user/'+user_id.value, authHeader);
+const  showMore = async ($data)=>{
+  moreDeetails.value=$data
+  user_id.value=$data.id
+  const response = await axios.get(base_url.value+'j_details/'+user_id.value, authHeader);
+  if(response.status === 200){
+    userDetails.value=response.data.user
+  }
+  const res = await axios.get(base_url.value+'notify_user/'+user_id.value, authHeader);
 
-    }
+}
 
 const connectEmployer = async () => {
 
   const formData = new FormData();
   formData.append('job_seeker_id', job_seeker_id.value)
+  formData.append('phone', phone.value)
+  if(phone.value === '' || phone.value.length<10){
+    return status.value= 'Valid phone number required'
+  }
   const res = await axios.post(base_url.value + 'job_seeker/connect_job_seeker', formData,authHeader)
-  status.value= 'Connection established successfully'
   if (res.data.status == 'success'){
     status.value= 'Connection established successfully'
   }
@@ -53,18 +57,19 @@ onMounted( ()=> {
 </script>
 
 
-  <template>
+<template>
+  <ul class="nav nav-underline">
     <ul class="nav nav-underline">
-      <ul class="nav nav-underline">
-        <li class="nav-item">
-          <router-link to="/e/dashboard/"  class="nav-link" aria-current="page">Suggested </router-link>
-        </li>
-        <li class="nav-item">
-          <router-link to="/e/dashboard/all"  class="nav-link active" >All</router-link>
-        </li>
-      </ul>
+      <li class="nav-item">
+        <router-link to="/e/dashboard/"  class="nav-link" aria-current="page">Suggested job seekers</router-link>
+      </li>
+      <li class="nav-item">
+        <router-link to="/e/dashboard/all"  class="nav-link active">All job seekers</router-link>
+      </li>
     </ul>
+  </ul>
 
+  <div class="text-uppercase fs-1 text-info" v-if="status">{{status}}</div>
 
   <div class="bg-light job_seekers p-4">
     <div v-for="user in jobseekers" :key="user" class="card" style="width: 18rem;">
@@ -99,50 +104,53 @@ onMounted( ()=> {
     </div>
 
   </div>
-    <div class="modal fade" id="connect" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h1 class="modal-title fs-5" id="exampleModalLabel">Connect with Jobseeker</h1>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <form @submit.prevent="connectEmployer">
-              <p>Pay connecting fee of ksh 200 to be fully connected with the job seeker</p>
-              <h5 for="">Enter Your phone Number to continue </h5>
-              <input type="text" class="form-control" placeholder="phone eg 0728548760">
-              <button data-bs-dismiss="modal" class="btn btn-primary text-primary text-white float-end my-2">Continue</button>
-            </form>
-          </div>
+  <div class="modal fade" id="connect" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Connect with Jobseeker</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+
+          <div class=" text-info" v-if="status">{{status}}</div>
+
+          <form @submit.prevent="connectEmployer">
+            <p>Pay connecting fee of ksh 200 to be fully connected with the job seeker</p>
+            <h5 for="">Enter Your phone Number to continue </h5>
+            <input type="text" class="form-control"  v-model="phone" placeholder="phone eg 0728548760">
+            <button class="btn btn-primary text-primary text-white float-end my-2">Continue</button>
+          </form>
         </div>
       </div>
     </div>
-    <div class="modal fade" id="viewMore" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h1 class="modal-title fs-5" id="exampleModalLabel">More info</h1>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
+  </div>
+  <div class="modal fade" id="viewMore" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">More info</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
 
-          <h3 class="text-center">About the employer</h3>
-          <div class="d-flex">
-            <div class="p-4">
-              <h5>Full Name <span class="text-secondary ms-2">{{ userDetails.firstName }}</span></h5>
-              <h5>County<span class="text-secondary ms-2">{{ userDetails.county }}</span></h5>
-            </div>
-            <div class="p-4">
-              <h5>Subcounty<span class="text-secondary ms-2">{{ userDetails.sub_county }}</span></h5>
-            </div>
+        <h3 class="text-center">About the employer</h3>
+        <div class="d-flex">
+          <div class="p-4">
+            <h5>Full Name <span class="text-secondary ms-2">{{ userDetails.firstName }}</span></h5>
+            <h5>County<span class="text-secondary ms-2">{{ userDetails.county }}</span></h5>
           </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <div class="p-4">
+            <h5>Subcounty<span class="text-secondary ms-2">{{ userDetails.sub_county }}</span></h5>
           </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
         </div>
       </div>
     </div>
+  </div>
 
-  </template>
+</template>
 
 
 <style scoped>

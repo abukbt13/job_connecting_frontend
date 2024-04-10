@@ -14,6 +14,8 @@ const user_id = ref('')
 const employer_id = ref('')
 const moreDeetails = ref([])
 const userDetails = ref([])
+const notification = ref([])
+const user_notification = ref([])
 //
 function assignEmployer_id($post){
   employer_id.value=$post
@@ -24,6 +26,9 @@ const connectEmployer = async () => {
   const formData = new FormData();
   formData.append('employer_id', employer_id.value)
   formData.append('phone', phone.value)
+  if(phone.value === '' || phone.value.length<10){
+    return status.value= 'Valid phone number required'
+  }
   const res = await axios.post(base_url.value + 'job_seeker/connect_employer', formData,authHeader)
   if (res.data.status == 'success'){
     await getPosts()
@@ -51,7 +56,17 @@ const  showMore = async ($data)=>{
   const res = await axios.get(base_url.value+'create_notification/'+user_id.value, authHeader);
 
 }
+
+const   Notifications   = async () => {
+  const res= await axios.get(base_url.value+'j_notifications', authHeader)
+  if(res.status === 200){
+    notification.value = res.data
+    user_notification.value = res.data.notification
+  }
+}
+
 onMounted(()=>{
+  Notifications()
   j_Connects()
   fetchmyConnect()
   getPosts()
@@ -66,12 +81,12 @@ onMounted(()=>{
     <li class="nav-item mt-3">
       <router-link to="/j/dashboard/best_match" class="nav-link active" aria-current="page">Best Matches</router-link>
     </li>
+
     <li class="nav-item">
-          <span class="position-relative">
+          <span  data-bs-target="#notification" data-bs-toggle="modal"  class="position-relative">
         <i style="font-size: 20px" class="fs-2 bi bi-bell-fill"></i>
-        <span style="font-size: 20px" class="position-absolute ms-3 top-0 start-110 translate-middle badge rounded-pill bg-danger">
-          20 <!-- Your number goes here -->
-          <span class="visually-hidden">unread messages</span>
+        <span style="font-size: 20px;padding-left: 1rem; " class="position-absolute ms-4 top-4 start110 translate-middle badge rounded-pill bg-danger">
+           {{notification.count}}
         </span>
       </span>
 
@@ -136,6 +151,39 @@ onMounted(()=>{
 
 
   <!-- Modal -->
+  <div class="modal fade" id="notification" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Notification</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="table-responsive">
+
+          <table class="table table-bordered border table-striped-columns">
+            <thead>
+            <tr>
+              <th>FirstName</th>
+              <th>LastName</th>
+              <th>County</th>
+              <th>Picture</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr v-for="user in user_notification" :key="user">
+              <td>{{user.firstName}}</td>
+              <td>{{user.lastName}}</td>
+              <td>{{user.county}}</td>
+              <td><img :src="storage + 'Profiles/' + user.picture" width="60" height="60" alt=""></td>
+            </tr>
+            </tbody>
+
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="modal fade" id="viewMore" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -196,11 +244,12 @@ onMounted(()=>{
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
+          <div class="" v-if="status">{{status}}</div>
           <form @submit.prevent="connectEmployer">
             <p>By paying  ksh 200 you will be able to have full details of the job seeker </p>
             <h5 for="">Enter Your phone </h5>
             <input type="text" class="form-control" required v-model="phone" placeholder="phone eg 0728548760">
-            <button type="submit" data-bs-dismiss="modal" class="btn btn-primary text-primary text-white float-end my-2">Continue</button>
+            <button type="submit" class="btn btn-primary text-primary text-white float-end my-2">Continue</button>
           </form>
         </div>
 

@@ -1,7 +1,7 @@
 
 <script setup>
-import {user} from "@/Composables/user.js";
-const {base_url,authHeader,storage} =user()
+import {auth} from "@/Composables/auth.js";
+const {base_url,authHeader,storage} =auth()
 import Header from "@/components/Header.vue";
 import {onMounted, ref} from "vue";
 import axios from "axios";
@@ -119,7 +119,7 @@ onMounted( ()=>{
               <div class="d-flex">
                 <div class="">
 
-                  <img  :src="'http://127.0.0.1:8000/Profiles/'+picture"    height="200" width="200" class="" alt="...">
+                  <img :src="storage + 'Profiles/' + picture" height="200" width="200" class="" alt="...">
                 </div>
                 <div class="ms-2">
 

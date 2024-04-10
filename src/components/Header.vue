@@ -4,7 +4,9 @@ import {onMounted, ref} from "vue";
 const showProfile = ref(false)
 import {useRouter} from "vue-router";
 import {user} from "@/Composables/user.js"
+import {auth} from "@/Composables/auth.js";
 const {userDetails,details} =user()
+const {storage} = auth()
 const router = useRouter()
 const picture= ref('')
 const username= ref(null)
@@ -52,7 +54,7 @@ onMounted(()=>{
               </div>
 
                   <li class="nav-item text-uppercase">
-                    <img width="50" @click="showProfile = showProfile === false ? true : false" style="border-radius: 50%;" height="50"  :src="'http://127.0.0.1:8000/Profiles/'+details.picture"  alt="">
+                    <img width="50" @click="showProfile = showProfile === false ? true : false" style="border-radius: 50%;" height="50"  :src="storage + 'Profiles/'+details.picture"  alt="">
                   </li>
 
             </div>
@@ -70,7 +72,7 @@ onMounted(()=>{
             <div  :class="showProfile ? '':'d-none'"    class="showProfile d-flex justify-content-center align-items-center m-2 border p-4">
                <div class="profile" v-if="username">
                  <div class="d-flex justify-content-center">
-                   <img style="border-radius: 50%;" width="50"  height="50"  :src="'http://127.0.0.1:8000/Profiles/'+details.picture"   alt="">
+                   <img style="border-radius: 50%;" width="50"  height="50" :src="storage + 'Profiles/' + details.picture"   alt="">
                  </div>
                  <p class="text-center text-uppercase"> {{details.firstName}} {{details.lastName}}</p>
                  <div class="d-flex btn border">
