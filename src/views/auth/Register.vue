@@ -24,7 +24,7 @@ const role = ref('')
      formData.append('lastName', lastName.value)
      formData.append('phone', phone.value)
      formData.append('password', password.value)
-    const res = await axios.post('http://127.0.0.1:8000/api/auth/register',formData)
+    const res = await axios.post(base_url.value + 'auth/register',formData)
        if(res.status === 200){
             if(res.data.status === 'success'){
               localStorage.setItem('token', res.data.token)
