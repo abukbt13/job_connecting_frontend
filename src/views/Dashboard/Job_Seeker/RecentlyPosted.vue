@@ -81,6 +81,9 @@ onMounted(()=>{
     <li class="nav-item mt-3">
       <router-link to="/j/dashboard/best_match" class="nav-link " aria-current="page">Best Matches</router-link>
     </li>
+    <li class="nav-item mt-3">
+      <router-link to="/j/dashboard/employers" class="nav-link " aria-current="page">Eployers</router-link>
+    </li>
 
     <li class="nav-item">
           <span  data-bs-target="#notification" data-bs-toggle="modal"  class="position-relative">

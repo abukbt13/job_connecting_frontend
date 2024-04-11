@@ -14,6 +14,7 @@ import Suggested from "@/views/Dashboard/Employer/Suggested.vue";
 import All from "@/views/Dashboard/Employer/All.vue";
 import AdminDashboard from "@/views/Dashboard/Admin/Index.vue";
 import More from "@/views/Dashboard/Employer/More.vue";
+import Employers from "@/views/Dashboard/Job_Seeker/Employers.vue";
 const router = createRouter({  history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
@@ -73,6 +74,10 @@ const router = createRouter({  history: createWebHistory(import.meta.env.BASE_UR
         {
           path: 'best_match',
           component: Bestmatches,
+        },
+        {
+          path: 'employers',
+          component: Employers,
         }
       ]
     },
