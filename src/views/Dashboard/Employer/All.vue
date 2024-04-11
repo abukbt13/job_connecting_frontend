@@ -73,8 +73,9 @@ onMounted( ()=> {
 
   <div class="bg-light job_seekers p-4">
     <div v-for="user in jobseekers" :key="user" class="card" style="width: 18rem;">
-      <img style="border-radius: 30%;padding: 1rem;" :src="storage+user.picture" class="card-img-top" alt="...">
-      <div class="card-body">
+
+      <img style="border-radius: 30%;padding: 1rem;" v-if="user.picture" :src="storage+'Profiles/'+user.picture" class="card-img-top" alt="no image">
+      <img style="border-radius: 30%;padding: 1rem;" v-else src="/user.png" class="card-img-top" alt="Avatar">      <div class="card-body">
         <div class="d-flex">
           <div class="">
             <h5>Name</h5>

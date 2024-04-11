@@ -119,7 +119,8 @@ onMounted( ()=>{
               <div class="d-flex">
                 <div class="">
 
-                  <img :src="storage + 'Profiles/' + picture" height="200" width="200" class="" alt="...">
+                  <img v-if="picture" :src="storage + 'Profiles/' + picture" height="200" width="200" class="" alt="...">
+                  <img v-else src="/user.png" height="200" width="200" class="" alt="...">
                 </div>
                 <div class="ms-2">
 
@@ -186,7 +187,7 @@ onMounted( ()=>{
 
                     </div>
                     <div class="mb-3">
-                      <label for="exampleFormControlTextarea1" class="form-label">Upload Profile</label>
+                      <label for="exampleFormControlTextarea1" class="form-label">Upload new Profile image</label>
                       <input type="file" class="form-control" @change="pictureUpload">
                     </div>
 

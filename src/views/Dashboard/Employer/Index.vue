@@ -79,8 +79,7 @@ onMounted( ()=>{
   <div  class="my-1 p-2 bg-success text-uppercase text-white text-center" v-if="status">{{status}}</div>
   <div class="d-flex">
       <div class="sidebar">
-          <h2 class="text-uppercase text-primary ms-4 mt-3">Dashboard</h2>
-        <div class="container"><p class="fs-3">My Connections</p></div>
+        <div class="container"><p class="fs-3 bg-info mt-2">My Connections</p></div>
 
         <div style="border-bottom: 2px solid #ddf" class="m-4 border-bottom" v-for="my_connect in e_connects" :key="my_connect">
 
@@ -132,7 +131,6 @@ onMounted( ()=>{
                 <h4 class="font-weight-normal mb-3">My Connects <i class="mdi mdi-diamond mdi-24px float-right"></i>
                 </h4>
                 <h2 class="mb-5">{{ my_connect_now }}</h2>
-                <button class="btn btn-primary">view</button>
               </div>
             </div>
           </div>

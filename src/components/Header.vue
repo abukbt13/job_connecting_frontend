@@ -54,7 +54,8 @@ onMounted(()=>{
               </div>
 
                   <li class="nav-item text-uppercase">
-                    <img width="50" @click="showProfile = showProfile === false ? true : false" style="border-radius: 50%;" height="50"  :src="storage + 'Profiles/'+details.picture"  alt="">
+                    <img width="50" v-if="details.picture" @click="showProfile = showProfile === false ? true : false" style="border-radius: 50%;" height="50"  :src="storage + 'Profiles/'+details.picture"  alt="">
+                    <img width="50" v-else @click="showProfile = showProfile === false ? true : false" style="border-radius: 50%;" height="50"  src="/user.png"  alt="">
                   </li>
 
             </div>
@@ -72,7 +73,8 @@ onMounted(()=>{
             <div  :class="showProfile ? '':'d-none'"    class="showProfile d-flex justify-content-center align-items-center m-2 border p-4">
                <div class="profile" v-if="username">
                  <div class="d-flex justify-content-center">
-                   <img style="border-radius: 50%;" width="50"  height="50" :src="storage + 'Profiles/' + details.picture"   alt="">
+                   <img v-if="details.picture" style="border-radius: 50%;" width="50"  height="50" :src="storage + 'Profiles/' + details.picture"   alt="">
+                   <img v-else style="border-radius: 50%;" width="50"  height="50" src="/user.png"   alt="No image">
                  </div>
                  <p class="text-center text-uppercase"> {{details.firstName}} {{details.lastName}}</p>
                  <div class="d-flex btn border">
