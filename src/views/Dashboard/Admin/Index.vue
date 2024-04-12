@@ -27,7 +27,7 @@ const getLogs = async () => {
 const getPayments = async () => {
   const response = await axios.get(base_url.value+'payments', authHeader);
   if(response.status === 200){
-    payments.value=response.data.payments
+    payments.value=response.data.connects
   }
 }
 const getUsers = async () => {
@@ -74,15 +74,16 @@ onMounted(()=>{
                     <th scope="col">name</th>
                     <th scope="col">Email</th>
                     <th scope="col">County</th>
+                    <th scope="col">Sub County</th>
                   </tr>
                   </thead>
                   <tbody>
                   <tr v-for="user in users" :key="user">
-                    <th scope="row">{{ user.firstName }}</th>
-                    <th scope="row">{{ user.lastName }}</th>
+                    <td >{{ user.firstName }}</td>
+                    <td>{{ user.lastName }}</td>
                     <td>{{ user.email }}</td>
                     <td>{{ user.county }}</td>
-                    <td><textarea class="form-control">{{ user.sub_county }}</textarea></td>
+                    <td>{{ user.sub_county }}</td>
                   </tr>
 
                   </tbody>
@@ -152,17 +153,17 @@ onMounted(()=>{
                   <thead>
                   <tr>
                     <th scope="col">#</th>
-                    <th scope="col">title</th>
-                    <th scope="col">details</th>
-                    <th scope="col">Platform</th>
+                    <th scope="col">job_seeker_id</th>
+                    <th scope="col">employer_id</th>
+                    <th scope="col">Receit No</th>
                   </tr>
                   </thead>
                   <tbody>
                   <tr v-for="payment in payments" :key="payment">
-                    <th scope="row">{{ payment.id }}</th>
-                    <td>{{ payment.title }}</td>
-                    <td><textarea class="form-control">{{ payment.details }}</textarea></td>
-                    <td>{{ payment.platform }}</td>
+                    <td>{{ payment.id }}</td>
+                    <td>{{ payment.job_seeker_id }}</td>
+                    <td>{{ payment.employer_id }}</td>
+                    <td>{{ payment.receipt_no }}</td>
                   </tr>
 
                   </tbody>
@@ -177,12 +178,14 @@ onMounted(()=>{
       </div>
 
     </div>
+
     <div class="table-responsive">
       <table class="table table-bordered border ms-4 mt-2">
         <thead>
         <tr>
           <th scope="col" class="text-center fs-2" colspan="6">Messages from users </th>
         </tr>
+
         <tr>
           <th scope="col">#</th>
           <th scope="col">Name</th>
