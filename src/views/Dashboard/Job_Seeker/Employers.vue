@@ -29,18 +29,19 @@ const connectEmployer = async () => {
   const formData = new FormData();
   formData.append('employer_id', employer_id.value)
   formData.append('phone', phone.value)
-  if(phone.value === '' || phone.value.length<10){
-    return status.value= 'Valid phone number required'
-  }
-  const res = await axios.post(base_url.value + 'job_seeker/connect_employer', formData,authHeader)
-  if (res.data.status == 'success'){
-    await getPosts()
-    await  fetchmyConnect()
-    status.value= 'Connection established successfully'
-  }
-  else {
-    status.value = res.data.message
-  }
+  alert(employer_id.value)
+  // if(phone.value === '' || phone.value.length<10){
+  //   return status.value= 'Valid phone number required'
+  // }
+  // const res = await axios.post(base_url.value + 'job_seeker/connect_employer', formData,authHeader)
+  // if (res.data.status == 'success'){
+  //   await getPosts()
+  //   await  fetchmyConnect()
+  //   status.value= 'Connection established successfully'
+  // }
+  // else {
+  //   status.value = res.data.message
+  // }
 }
 
 const getEmployers = async () => {
@@ -115,7 +116,7 @@ onMounted(()=>{
                   <h5>Sub county<span class="text-secondary ms-2">{{employer.sub_county}}</span></h5>
                 </div>
                 <div class="d-flex mt-4 ">
-                  <button class="btn btn-success" @click="assignEmployer_id(employer.user_id)" data-bs-toggle="modal" data-bs-target="#connect" >connect--></button>
+                  <button class="btn btn-success" @click="assignEmployer_id(employer.id)" data-bs-toggle="modal" data-bs-target="#connect" >connect--></button>
                 </div>
               </div>
             </div>
