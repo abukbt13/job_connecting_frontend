@@ -29,19 +29,18 @@ const connectEmployer = async () => {
   const formData = new FormData();
   formData.append('employer_id', employer_id.value)
   formData.append('phone', phone.value)
-  alert(employer_id.value)
-  // if(phone.value === '' || phone.value.length<10){
-  //   return status.value= 'Valid phone number required'
-  // }
-  // const res = await axios.post(base_url.value + 'job_seeker/connect_employer', formData,authHeader)
-  // if (res.data.status == 'success'){
-  //   await getPosts()
-  //   await  fetchmyConnect()
-  //   status.value= 'Connection established successfully'
-  // }
-  // else {
-  //   status.value = res.data.message
-  // }
+  if(phone.value === '' || phone.value.length<10){
+    return status.value= 'Valid phone number required'
+  }
+  const res = await axios.post(base_url.value + 'job_seeker/connect_employer', formData,authHeader)
+  if (res.data.status == 'success'){
+    await getPosts()
+    await  fetchmyConnect()
+    status.value= 'Connection established successfully'
+  }
+  else {
+    status.value = res.data.message
+  }
 }
 
 const getEmployers = async () => {
