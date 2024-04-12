@@ -24,6 +24,7 @@ const   fetchsuggested = async () => {
 
 function assignEmployer_id($post){
   job_seeker_id.value=$post
+  alert(job_seeker_id.value)
 }
 
 const  showMore = async ($data)=>{
@@ -96,10 +97,11 @@ onMounted( ()=> {
             <h5>Sub County</h5>
             <p style="font-size: 20px;" class="card-text">{{user.sub_county}}</p>
           </div>
+<!--          {{user}}-->
         </div>
         <div class="d-flex justify-content-between">
           <button class="btn mx-4 my-2 btn-info" @click="showMore(user)" data-bs-target="#viewMore" data-bs-toggle="modal">More details</button>
-          <button class="btn mx-4 my-2 btn-success" data-bs-toggle="modal" @click="assignEmployer_id(user.id)" data-bs-target="#connect">Connect</button>
+          <button class="btn mx-4 my-2 btn-success" data-bs-toggle="modal" @click="assignEmployer_id(user.id)" data-bs-target="#connect">Connect{{user.id}}</button>
         </div>
       </div>
 

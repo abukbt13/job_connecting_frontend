@@ -1,35 +1,60 @@
 <script setup>
-import {ref} from "vue";
+import {onMounted, ref} from "vue";
+
+import {auth} from "@/Composables/auth.js";
 
 const token = localStorage.getItem("token");
 import Header from "@/components/Header.vue";
 import Footer from "@/components/Footer.vue";
+import axios from "axios";
+const authenticated = ref('false');
+
+const {storage,authHeader,base_url} = auth()
+
+  const   confirmloggedin = async () => {
+          try {
+            const res= await axios.get(base_url.value+'auth/user', authHeader)
+            if (res.data.authenticated === true){
+              // alert()
+              authenticated.value = 'true'
+            }
+          }
+          catch  (error) {
+          }
+  }
+onMounted( ()=>{
+  confirmloggedin()
+})
 </script>
 
 <template>
-  <div v-if="token" class="">
-    <Header />
-  </div>
-  <div v-else class="">
-    <nav style="background-color: #d538fc;" class="navbar sticky-top navbar-expand-lg">
-      <div class="container-fluid m-auto">
-        <router-link class="navbar-brand text-white" to="/">Connect Me</router-link>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-          <ul class="navbar-nav">
-            <li class="nav-item text-primary">
-              <router-link class="nav-link active  text-white text-uppercase" to="/auth/login">Login</router-link>
-            </li>
-            <li class="nav-item text-primary">
-              <router-link class="nav-link active  text-white text-uppercase" to="/auth/register">Register</router-link>
-            </li>
-          </ul>
+ <div class="" v-if="authenticated=='true'">
+   <Header />
+ </div>
+  <div class="" v-else>
+    <div  class="">
+      <nav style="background-color: #d538fc;" class="navbar sticky-top navbar-expand-lg">
+        <div class="container-fluid m-auto">
+          <router-link class="navbar-brand text-white" to="/">Connect Me</router-link>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+            <ul class="navbar-nav">
+              <li class="nav-item text-primary">
+                <router-link class="nav-link active  text-white text-uppercase" to="/auth/login">Login</router-link>
+              </li>
+              <li class="nav-item text-primary">
+                <router-link class="nav-link active  text-white text-uppercase" to="/auth/register">Register</router-link>
+              </li>
+            </ul>
+          </div>
         </div>
-      </div>
-    </nav>
+      </nav>
+    </div>
   </div>
+
+
 
   <div class="main container">
       <div class="row intro my-2 py-2">
