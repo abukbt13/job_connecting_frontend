@@ -70,7 +70,7 @@ const role = ref('')
               </div>
             <div class="mb-3">
                 <label for="exampleFormControlTextarea1" class="form-label">Phone</label>
-                <input type="number" class="form-control" v-model="phone">
+                <input type="number" class="form-control" v-model="phone" placeholder="e.g 0712543345">
               </div>
               <div class="mb-3">
                 <label for="exampleFormControlTextarea1" class="form-label">Email</label>

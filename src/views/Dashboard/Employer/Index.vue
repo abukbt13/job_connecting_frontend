@@ -64,6 +64,7 @@ const createPost = async () => {
   }
 }
 
+const showConnects = ref(true);
 
 onMounted( ()=>{
   my_Connects()
@@ -77,9 +78,13 @@ onMounted( ()=>{
 <template>
   <Header />
   <div  class="my-1 p-2 bg-success text-uppercase text-white text-center" v-if="status">{{status}}</div>
+  <i @click="showConnects = !showConnects" style="color:blue; font-size: 34px; " class="bi sticky-top bi-text-left d-block d-lg-none d-md-none"></i>
+
   <div class="d-flex">
-      <div class="sidebar">
-        <div class="container"><p class="fs-3 bg-info mt-2">My Connections</p></div>
+
+
+    <div :class="{ 'd-none': showConnects }" class="sidebar small">
+        <div class="container"><p class="fs-3 border-bottom mt-2 text-center">My Connections</p></div>
 
         <div style="border-bottom: 2px solid #ddf" class="m-4 border-bottom" v-for="my_connect in e_connects" :key="my_connect">
 
@@ -100,7 +105,7 @@ onMounted( ()=>{
       <div class="">
         <div class="row d-flex w-100">
 
-          <div style=" padding: 1rem;"  class="col-md-4 stretch-card grid-margin">
+          <div style=" padding: 1rem;"  class="col-md-4 col_sm stretch-card grid-margin">
             <div style="background-color: #f2b722;"  class="card bg-gradient-danger card-img-holder">
               <div class="card-body">
                 <h4 class="font-weight-normal mb-3">Notifications <i class="mdi mdi-chart-line mdi-24px float-right"></i>
@@ -111,7 +116,7 @@ onMounted( ()=>{
             </div>
           </div>
 
-          <div  style=" padding: 1rem;"  class="col-md-4 stretch-card grid-margin">
+          <div  style=" padding: 1rem;"  class="col-md-4 col_sm stretch-card grid-margin">
             <div style="background-color: #de7af0;"  class="card bg-gradient-info card-img-holder">
               <div class="card-body">
                 <h4 class="font-weight-normal mb-3">My Posts <i class="mdi mdi-bookmark-outline mdi-24px float-right"></i>
@@ -125,7 +130,7 @@ onMounted( ()=>{
             </div>
           </div>
 
-          <div  style=" padding: 1rem;"  class="col-md-4 stretch-card grid-margin">
+          <div  style=" padding: 1rem;"  class="col-md-4 col_sm stretch-card grid-margin">
             <div style="background-color: #827e74;"  class="card bg-gradient-success card-img-holder">
               <div class="card-body">
                 <h4 class="font-weight-normal mb-3">My Connects <i class="mdi mdi-diamond mdi-24px float-right"></i>
@@ -294,5 +299,25 @@ onMounted( ()=>{
   min-height: 100vh;
   max-height: 100vh;
   overflow: scroll;
+}
+@media screen and  (min-width:200px) and (max-width:600px){
+  .show{
+    display: block;
+  }
+  .small {
+    position:absolute;
+    top:4rem;
+    left:3rem;
+    width: 19rem;
+    z-index: 1;
+    color:white;
+    background: #b342f5;
+    min-height: 8rem;
+    max-height: 20rem;
+    overflow: scroll;
+  }
+  .col_sm{
+    width: 10rem;
+  }
 }
 </style>

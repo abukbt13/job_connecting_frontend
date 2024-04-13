@@ -2,6 +2,8 @@
     import axios from "axios"
     import{ref} from 'vue'
     import {useRouter} from "vue-router";
+    import {auth} from "@/Composables/auth.js";
+    const {base_url} =auth()
     const email=ref('')
     const error=ref('')
     const router = useRouter()
@@ -9,10 +11,10 @@
     const handleForgotPassword = async()=>{
       const formData = new FormData()
       formData.append('email',email.value)
-        const res=await axios.post('http://127.0.0.1:8000/api/auth/forget_password',formData)
+        const res=await axios.post(base_url.value+'auth/forget_password',formData)
       if(res.status===200){
           if(res.data.status==='success'){
-            await router.push('/auth/reset_password')
+            await router.push('/auth/reset_password/'+email.value)
             // success.value=res.data.status
           }
           else{

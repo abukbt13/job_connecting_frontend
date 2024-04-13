@@ -15,6 +15,7 @@ import All from "@/views/Dashboard/Employer/All.vue";
 import AdminDashboard from "@/views/Dashboard/Admin/Index.vue";
 import More from "@/views/Dashboard/Employer/More.vue";
 import Employers from "@/views/Dashboard/Job_Seeker/Employers.vue";
+import Test from "@/views/Test.vue";
 const router = createRouter({  history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
@@ -36,7 +37,7 @@ const router = createRouter({  history: createWebHistory(import.meta.env.BASE_UR
       component: ForgotPassword
     },
     {
-      path: '/auth/reset_password',
+      path: '/auth/reset_password/:email',
       component: FinishReset
     },
     {
@@ -46,6 +47,10 @@ const router = createRouter({  history: createWebHistory(import.meta.env.BASE_UR
     {
       path: '/validate/:id',
       component : Validate
+    },
+    {
+      path: '/test',
+      component : Test
     },
     {
       path: '/e/dashboard',

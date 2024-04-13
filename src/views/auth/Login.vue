@@ -73,7 +73,8 @@ const login = async () => {
           </div>
           <br>
         </form>
-        <router-link to="/auth/forget_password" class="fs-1 text-decoration-none text-dark">Forget password?</router-link>
+        <p>Forget Password dont worry <router-link to="/auth/forget_password" class=" text-dark">Click here?</router-link>
+        </p>
       </div>
 
     </div>
