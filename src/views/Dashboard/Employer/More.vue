@@ -35,46 +35,58 @@ onMounted( ()=> {
 <div class="container">
   <div class="row">
     <div class="col">
-      <h2>More About ABraham Kibet</h2>
-      <h5>First Name</h5>
-      <p>{{user.firstName}}</p>
-      <h5>Last Name</h5>
-      <p>{{user.lastName}}</p>
-      <h5>County</h5>
-      <p>{{user.county}}</p>
-      <h5>Sub county</h5>
-      <p>{{user.sub_county}}</p>
-      <h5>Phone Number</h5>
-      <p>{{user.phone}}</p>
-      <h5>Gender</h5>
-      <p>{{user.gender}}</p>
+      <h2>More Information</h2>
+      <div class="border p-3 mt-1">
+        <h2>Full Name</h2>
+        <p>{{user.firstName}} {{user.lastName}}</p>
+      </div>    <div class="border p-3 mt-1">
+        <h2>County</h2>
+        <p>{{user.county}}</p>
+      </div>    <div class="border p-3 mt-1">
+        <h2>Sub County</h2>
+        <p>{{user.sub_county}}</p>
+      </div>
+      <div class="border p-3 mt-1">
+        <h2>Phone Number</h2>
+        <p>{{user.phone}}</p>
+      </div>
+      <div class="border p-3 mt-1">
+        <h2>Gender</h2>
+        <p>{{user.gender}}</p>
+      </div>
     </div>
 
     <div class="col">
-      <H2>Reference</H2>
+
       <div v-if="count>0" class="">
-
       <ol>
-          <li v-for="ref in referees" :key="ref">
-            <div class="d-flex">
-              <div class="">
-                <h2>First Name</h2>
-                <p>{{ ref.firstName }}</p>
-                <h2>County</h2>
-                <p>{{ ref.county }}</p>
-                <h2>Email</h2>
-                <p>{{ ref.email }}</p>
 
+        <H2 class="text-center ">Reference</H2>
+          <li v-for="ref in referees" :key="ref">
+            <div class=" border">
+                <div class="details border p-4">
+                  <div class="w-50">
+                    <div class="border m-1 flex-column align-items-center">
+                      <h2>Full Name</h2>
+                      <p>{{ ref.firstName }} {{ ref.lastName }} </p>
+                    </div>
+                    <div class="border m-1">
+                      <h3>Email</h3>
+                      <p>{{ ref.phone }}</p>
+                    </div>
+                  </div>
+                  <div class="w-50 m-1 ">
+                    <div class="border m-1 flex-column align-items-center">
+                      <h2>Full Name</h2>
+                      <p>{{ ref.firstName }} {{ ref.lastName }} </p>
+                    </div>
+                    <div class="border m-1">
+                      <h3>Email</h3>
+                      <p>{{ ref.phone }}</p>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div class="">
-                <h2>Last Name</h2>
-                <p>{{ ref.lastName }}</p>
-                <h2>Sub County</h2>
-                <p>{{ ref.sub_county }}</p>
-                <h2>Phone</h2>
-                <p>{{ ref.phone }}</p>
-              </div>
-            </div>
           </li>
         </ol>
       </div>
@@ -87,5 +99,9 @@ onMounted( ()=> {
 </template>
 
 <style scoped>
+.details{
+  display: flex;
+  justify-content: space-between;
+}
 
 </style>

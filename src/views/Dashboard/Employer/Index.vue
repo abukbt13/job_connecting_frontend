@@ -83,7 +83,8 @@ onMounted( ()=>{
   <div class="d-flex">
 
 
-    <div :class="{ 'd-none': showConnects }" class="sidebar small">
+    <div :class="[showConnects ? 'small' : '', showConnects ? '' : 'd-none']" class="sidebar">
+
         <div class="container"><p class="fs-3 border-bottom mt-2 text-center">My Connections</p></div>
 
         <div style="border-bottom: 2px solid #ddf" class="m-4 border-bottom" v-for="my_connect in e_connects" :key="my_connect">
@@ -98,6 +99,7 @@ onMounted( ()=>{
             <i style="font-size: 32px;" class="bi bi-envelope-at"></i>
             {{  my_connect.email }}
           </p>
+          <router-link :to="'/user/more/' + my_connect.employer_id" class="btn mx-4 my-2 btn-info flex-end">More details</router-link>
         </div>
 
       </div>
@@ -166,19 +168,14 @@ onMounted( ()=>{
             <tr>
               <th scope="col">#</th>
               <th scope="col">Description</th>
+              <th scope="col">Payment Mode</th>
               <th scope="col">Payment Amount</th>
-              <th scope="col">Payment mode</th>
-              <th scope="col">Priority</th>
-              <th colspan="2"></th>
             </tr>
             <tr v-for="allpost in allposts" :key="allpost">
               <td>{{allpost.id}}</td>
-              <td><textarea name="" id="">{{allpost.description}}</textarea></td>
+              <td><p>{{allpost.description}}  </p></td>
               <td>{{allpost.payment}}</td>
               <td>{{allpost.payment_amount}}</td>
-              <td>{{allpost.priority}}</td>
-              <td><button class="btn bg-danger">Delete</button></td>
-              <td><button class="btn bg-primary">Update</button></td>
             </tr>
           </table>
         </div>

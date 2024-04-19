@@ -61,8 +61,8 @@ onMounted( ()=>{
       <div class="col col-md-6 col-lg-6">
         <h1>Get Connected <br>Today With Ease</h1>
         <p>Troubled connecting with clients try connect_me
-          <br>and you will see significant cost getting connected</p>
-        <router-link to="/auth/register" style="background-color: #3f1be0;font-size: 23px;color: white;" class="btn">Get Connected Today<i style="font-size: 23px;color: blue;" class="bi bi-plug"></i></router-link>
+          <br>and you will see how quickly you can get connected</p>
+        <router-link to="/auth/register" style="background-color: #3f1be0;font-size: 23px;color: white;" class="btn">Get started<i style="font-size: 23px;color: blue;" class="bi bi-plug"></i></router-link>
 
       </div>
         <div class="col d-none d-md-block col-md-6 col-lg-6">

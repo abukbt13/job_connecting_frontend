@@ -72,7 +72,7 @@ onMounted( ()=> {
   <div class="text-uppercase fs-1 text-info" v-if="status">{{status}}</div>
 
   <div class="bg-light job_seekers p-4">
-    <div v-for="user in jobseekers" :key="user" class="card" style="width: 18rem;">
+    <div v-for="user in jobseekers" :key="user" class="card mt-3" style="width: 18rem;">
 
       <img style="border-radius: 30%;padding: 1rem;" v-if="user.picture" :src="storage+'Profiles/'+user.picture" class="card-img-top" alt="no image">
       <img style="border-radius: 30%;padding: 1rem;" v-else src="/user.png" class="card-img-top" alt="Avatar">      <div class="card-body">
@@ -97,7 +97,6 @@ onMounted( ()=> {
           </div>
         </div>
         <div class="d-flex justify-content-between">
-          <button class="btn mx-4 my-2 btn-info" @click="showMore(user)" data-bs-target="#viewMore" data-bs-toggle="modal">More details</button>
           <button class="btn mx-4 my-2 btn-success" data-bs-toggle="modal" @click="assignEmployer_id(user.id)" data-bs-target="#connect">Connect</button>
         </div>
       </div>

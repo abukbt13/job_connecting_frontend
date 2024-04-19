@@ -100,7 +100,6 @@ onMounted( ()=> {
 <!--          {{user}}-->
         </div>
         <div class="d-flex justify-content-between">
-          <button class="btn mx-4 my-2 btn-info" @click="showMore(user)" data-bs-target="#viewMore" data-bs-toggle="modal">More details</button>
           <button class="btn mx-4 my-2 btn-success" data-bs-toggle="modal" @click="assignEmployer_id(user.id)" data-bs-target="#connect">Connect</button>
         </div>
       </div>
